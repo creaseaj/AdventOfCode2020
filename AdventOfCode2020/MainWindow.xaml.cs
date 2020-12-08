@@ -41,5 +41,11 @@ namespace AdventOfCode2020
             Window day3Window = new day3();
             day3Window.Show();
         }
+
+        private void day4_Click(object sender, RoutedEventArgs e)
+        {
+            Window day4Window = new day4();
+            day4Window.Show();
+        }
     }
 }

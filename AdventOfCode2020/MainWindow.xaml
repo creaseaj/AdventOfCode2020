@@ -10,6 +10,7 @@
         <Button Content="Day 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Button Content="Day 2" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="day2_Click"/>
         <Button Content="Day 3" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Click="day3_Click"/>
+        <Button Content="Day 4" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Click="day4_Click"/>
 
     </Grid>
 </Window>

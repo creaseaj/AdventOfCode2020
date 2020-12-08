@@ -132,5 +132,117 @@ namespace AdventOfCode2020
                 return output;
             }
         }
+
+        static public class day4
+        {
+            public static bool validatePassport(string passportIn)
+            {
+                bool validity = true, containsCID = false;
+                string[] fields = Regex.Split(passportIn, @" |:|\r\n");
+                for (int i = 0; i < fields.Length; i += 2)
+                {
+                    switch (fields[i])
+                    {
+                        case "byr":
+                            if (Convert.ToInt32(fields[i + 1]) > 2002 | Convert.ToInt32(fields[i + 1]) < 1920) { validity = false; }
+                            break;
+
+                        case "iyr":
+                            if (Convert.ToInt32(fields[i + 1]) > 2020 | Convert.ToInt32(fields[i + 1]) < 2010) { validity = false; }
+                            break;
+
+                        case "eyr":
+                            if (Convert.ToInt32(fields[i + 1]) > 2030 | Convert.ToInt32(fields[i + 1]) < 2020) { validity = false; }
+                            break;
+
+                        case "hgt":
+
+                            if ((fields[i + 1].Substring(fields[i + 1].Length - 2, 2) != "cm") & (fields[i + 1].Substring(fields[i + 1].Length - 2, 2) != "in"))
+                            { validity = false; }
+
+                            else if (fields[i + 1].Substring(fields[i + 1].Length - 3, 2) == "cm")
+                            {
+                                if (Convert.ToInt32(fields[i + 1].Substring(0, 3)) > 193 | Convert.ToInt32(fields[i + 1].Substring(0, 3)) < 150) { validity = false; }
+                            }
+
+                            else if (fields[i + 1].Substring(fields[i + 1].Length - 3, 2) == "in")
+                            {
+                                if(Convert.ToInt32(fields[i + 1].Substring(0, 2)) > 76 | Convert.ToInt32(fields[i + 1].Substring(0, 2)) < 59) { validity = false; } 
+                            }
+
+                            break;
+                        case "hcl":
+                            if (!Regex.IsMatch(fields[i + 1], @"#([0-9]|[a-f]){6}"))
+                            {
+                                validity = false;
+                            }
+                            break;
+                        case "ecl":
+                            if (fields[i + 1] != "amb" & fields[i + 1] != "blu" & fields[i + 1] != "brn" & fields[i + 1] != "gry" & fields[i + 1] != "grn"
+                                & fields[i + 1] != "hzl" & fields[i + 1] != "oth") { validity = false; }
+                            break;
+                        case "pid":
+                            if (!Regex.IsMatch(fields[i + 1], @"[0-9]{9}"))
+                            {
+                                validity = false;
+                            }
+                            break;
+                        case "cid":
+                            containsCID = true;
+                            break;
+                    }
+                }
+                if ((containsCID = true & fields.Length != 16)) {
+                    validity = false; 
+                }
+                else if (containsCID = false & fields.Length != 14) { validity = false; }
+                return validity;
+            }
+
+            public static int validatePassports( string listIn)
+            {
+                int passportCounter = 0;
+                string[] theList = Regex.Split(listIn, @"\r\n\r\n");
+                for (int i = 0; i < theList.Length; i++)
+                {
+                    if (validatePassport(theList[i]))
+                    {
+                        passportCounter++;
+                    }
+                }
+                return passportCounter;
+            }
+            public static int checkPassports( string listIn)
+            {
+                int counter = 0, passportCounter = 0 ;
+                bool ContainsCID = false;
+                
+                string[] theList = Regex.Split(listIn, @"\r\n\r\n");
+                for(int i = 0; i < theList.Length; i++)
+                {
+                    string[] toSplit = Regex.Split(theList[i], @" |\r\n");
+                    for(int j = 0; j < toSplit.Length; j++)
+                    {
+                        if(toSplit[j].Substring(0,3) == "cid")
+                        {
+                            ContainsCID = true;
+                            if (toSplit.Length == 8)
+                            {
+                                passportCounter++;
+                            }
+                            break;
+                        }
+                    }
+                    if (ContainsCID == false & toSplit.Length == 7)
+                    {
+                        passportCounter++;
+                    }
+                    ContainsCID = false;
+
+                }
+                return passportCounter;
+
+            }
+        }
     }
 }
