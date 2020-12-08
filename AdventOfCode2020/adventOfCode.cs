@@ -135,68 +135,85 @@ namespace AdventOfCode2020
 
         static public class day4
         {
-            public static bool validatePassport(string passportIn)
+            static public bool validatePassport(string passportIn)
             {
                 bool validity = true, containsCID = false;
-                string[] fields = Regex.Split(passportIn, @" |:|\r\n");
-                for (int i = 0; i < fields.Length; i += 2)
+                string[] fields = Regex.Split(passportIn, @" |\r\n");
+                if (fields[fields.Length - 1] == "")
                 {
-                    switch (fields[i])
+
+                }
+                if (fields.Length >= 7)
+                {
+                    
+                    for (int i = 0; i < fields.Length; i++)
                     {
-                        case "byr":
-                            if (Convert.ToInt32(fields[i + 1]) > 2002 | Convert.ToInt32(fields[i + 1]) < 1920) { validity = false; }
-                            break;
+                        string[] field = Regex.Split(fields[i], @":");
+                        switch (field[0])
+                        {
+                            case "byr":
+                                if (Convert.ToInt32(field[1]) > 2002 | Convert.ToInt32(field[1]) < 1920) { validity = false; }
+                                break;
 
-                        case "iyr":
-                            if (Convert.ToInt32(fields[i + 1]) > 2020 | Convert.ToInt32(fields[i + 1]) < 2010) { validity = false; }
-                            break;
+                            case "iyr":
+                                if (Convert.ToInt32(field[1]) > 2020 | Convert.ToInt32(field[1]) < 2010) { validity = false; }
+                                break;
 
-                        case "eyr":
-                            if (Convert.ToInt32(fields[i + 1]) > 2030 | Convert.ToInt32(fields[i + 1]) < 2020) { validity = false; }
-                            break;
+                            case "eyr":
+                                if (Convert.ToInt32(field[1]) > 2030 | Convert.ToInt32(field[1]) < 2020) { validity = false; }
+                                break;
 
-                        case "hgt":
+                            case "hgt":
+                                if ((field[1].Substring(field[1].Length - 2, 2) != "cm") & (field[1].Substring(field[1].Length - 2, 2) != "in"))
+                                { validity = false; }
 
-                            if ((fields[i + 1].Substring(fields[i + 1].Length - 2, 2) != "cm") & (fields[i + 1].Substring(fields[i + 1].Length - 2, 2) != "in"))
-                            { validity = false; }
+                                else if (field[1].Substring(field[1].Length - 2, 2) == "cm")
+                                {
+                                    try
+                                    {
+                                        if (Convert.ToInt32(field[1].Substring(0, 3)) > 193 | Convert.ToInt32(field[1].Substring(0, 3)) < 150) { validity = false; }
+                                    }
+                                    catch { return false; }
+                                }
 
-                            else if (fields[i + 1].Substring(fields[i + 1].Length - 3, 2) == "cm")
-                            {
-                                if (Convert.ToInt32(fields[i + 1].Substring(0, 3)) > 193 | Convert.ToInt32(fields[i + 1].Substring(0, 3)) < 150) { validity = false; }
-                            }
-
-                            else if (fields[i + 1].Substring(fields[i + 1].Length - 3, 2) == "in")
-                            {
-                                if(Convert.ToInt32(fields[i + 1].Substring(0, 2)) > 76 | Convert.ToInt32(fields[i + 1].Substring(0, 2)) < 59) { validity = false; } 
-                            }
-
-                            break;
-                        case "hcl":
-                            if (!Regex.IsMatch(fields[i + 1], @"#([0-9]|[a-f]){6}"))
-                            {
-                                validity = false;
-                            }
-                            break;
-                        case "ecl":
-                            if (fields[i + 1] != "amb" & fields[i + 1] != "blu" & fields[i + 1] != "brn" & fields[i + 1] != "gry" & fields[i + 1] != "grn"
-                                & fields[i + 1] != "hzl" & fields[i + 1] != "oth") { validity = false; }
-                            break;
-                        case "pid":
-                            if (!Regex.IsMatch(fields[i + 1], @"[0-9]{9}"))
-                            {
-                                validity = false;
-                            }
-                            break;
-                        case "cid":
-                            containsCID = true;
-                            break;
+                                else if (field[1].Substring(field[1].Length - 2, 2) == "in")
+                                { 
+                                        if (Convert.ToInt32(field[1].Substring(0, 2)) > 76 | Convert.ToInt32(field[1].Substring(0, 2)) < 59) { validity = false; }
+                                    
+                                }
+                                break;
+                            case "hcl":
+                                if (!Regex.IsMatch(field[1], @"#([0-9]|[a-f]){6}"))
+                                {
+                                    validity = false;
+                                }
+                                break;
+                            case "ecl":
+                                if (field[1] != "amb" & field[1] != "blu" & field[1] != "brn" & field[1] != "gry" & field[1] != "grn"
+                                    & field[1] != "hzl" & field[1] != "oth") { validity = false; }
+                                break;
+                            case "pid":
+                                if (!Regex.IsMatch(field[1], @"[0-9]{9}"))
+                                {
+                                    validity = false;
+                                }
+                                break;
+                            case "cid":
+                                containsCID = true;
+                                break;
+                        }
                     }
+                    if (containsCID = true & fields.Length < 8)
+                    {
+                        validity = false;
+                    }
+                    else if (containsCID = false & fields.Length != 7) { 
+                        validity = false; 
+                    }
+                    return validity;
                 }
-                if ((containsCID = true & fields.Length != 16)) {
-                    validity = false; 
-                }
-                else if (containsCID = false & fields.Length != 14) { validity = false; }
-                return validity;
+                else { return false; }
+
             }
 
             public static int validatePassports( string listIn)
