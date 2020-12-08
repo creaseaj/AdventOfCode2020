@@ -101,5 +101,36 @@ namespace AdventOfCode2020
                 return counterOut;
             }
         }
+
+        static public class day3
+        {
+            private static int checkRun(string theMap, int right, int down)
+            {
+                int numberOut = 0, horizPos = 0;
+                string[] theList = Regex.Split(theMap, @"\n");
+                for (int i = 0; i < theList.Length; i += down)
+                {
+                    if (theList[i][horizPos] == Convert.ToChar("#"))
+                    {
+                        numberOut++;
+                    }
+                    horizPos += right;
+                    if (horizPos >= theList[i].Length - 1)
+                    {
+                        horizPos -= theList[i].Length - 1;
+                    }
+                }
+                return numberOut;
+            }
+            public static int firstPathTrees(string theMap)
+            {
+                return checkRun(theMap, 3, 1);
+            }
+            public static double secondPathTrees(string theMap)
+            {
+                double output =  checkRun(theMap,1,1) * checkRun(theMap,3,1) * checkRun(theMap,5,1) * checkRun(theMap,7,1) * checkRun(theMap,1,2);
+                return output;
+            }
+        }
     }
 }
