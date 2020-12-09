@@ -33,7 +33,7 @@ namespace AdventOfCode2020
         private void validatePassports(object sender, RoutedEventArgs e)
         {
             string toChange = inputBox.Text;
-            outputNumber.Text = Convert.ToString(adventOfCode.day4.validatePassports(toChange));
+            outputNewNumber.Text = adventOfCode.day4.validatePassports(toChange);
         }
     }
 }

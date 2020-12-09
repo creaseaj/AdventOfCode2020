@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventOfCode2020"
         mc:Ignorable="d"
-        Title="day4" Height="450" Width="437.389">
+        Title="day4" Height="450" Width="1004.531">
     <Grid Margin="10,10,10,123.8">
         <TextBox x:Name="inputBox" HorizontalAlignment="Left" Height="378" Margin="10,29,-161,-121" TextWrapping="Wrap" VerticalAlignment="Top" Width="201" AcceptsReturn="True"/>
         <TextBlock HorizontalAlignment="Left" Margin="216,36,-207,0" TextWrapping="Wrap" Text="Output:" VerticalAlignment="Top" Width="41" Height="19"/>
@@ -13,7 +13,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,11,-130,0" TextWrapping="Wrap" Text="Input:" VerticalAlignment="Top" Width="170"/>
         <Button Content="Check Passports" HorizontalAlignment="Left" Margin="216,11,-343,0" VerticalAlignment="Top" Width="177" Click="checkPassportsClick"/>
         <TextBlock HorizontalAlignment="Left" Margin="216,85,0,0" TextWrapping="Wrap" Text="Output:" VerticalAlignment="Top" Width="41" Height="19"/>
-        <TextBox x:Name="outputNewNumber" HorizontalAlignment="Left" Height="20" Margin="262,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" />
+        <TextBox x:Name="outputNewNumber" HorizontalAlignment="Left" Height="312" Margin="262,84,0,-110.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="705" />
         <Button Content="Find New Path" HorizontalAlignment="Left" Margin="216,60,0,0" VerticalAlignment="Top" Width="177" Click="validatePassports" />
     </Grid>
 </Window>

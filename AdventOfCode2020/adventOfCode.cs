@@ -135,19 +135,16 @@ namespace AdventOfCode2020
 
         static public class day4
         {
-            static public bool validatePassport(string passportIn)
+            static public string[] validatePassport(string passportIn)
             {
                 bool validity = true, containsCID = false;
-                string[] fields = Regex.Split(passportIn, @" |\r\n");
-                if (fields[fields.Length - 1] == "")
-                {
-
-                }
+                string[] fields = Regex.Split(passportIn, @" |\r\n| \r\n|\r\n ");
                 if (fields.Length >= 7)
                 {
-                    
+
                     for (int i = 0; i < fields.Length; i++)
                     {
+                        if (validity == false) { break; }
                         string[] field = Regex.Split(fields[i], @":");
                         switch (field[0])
                         {
@@ -173,17 +170,17 @@ namespace AdventOfCode2020
                                     {
                                         if (Convert.ToInt32(field[1].Substring(0, 3)) > 193 | Convert.ToInt32(field[1].Substring(0, 3)) < 150) { validity = false; }
                                     }
-                                    catch { return false; }
+                                    catch { return null; }
                                 }
 
                                 else if (field[1].Substring(field[1].Length - 2, 2) == "in")
-                                { 
-                                        if (Convert.ToInt32(field[1].Substring(0, 2)) > 76 | Convert.ToInt32(field[1].Substring(0, 2)) < 59) { validity = false; }
-                                    
+                                {
+                                    if (Convert.ToInt32(field[1].Substring(0, 2)) > 76 | Convert.ToInt32(field[1].Substring(0, 2)) < 59) { validity = false; }
+
                                 }
                                 break;
                             case "hcl":
-                                if (!Regex.IsMatch(field[1], @"#([0-9]|[a-f]){6}"))
+                                if (!Regex.IsMatch(field[1], @"^#[0-9a-f]{6}$"))
                                 {
                                     validity = false;
                                 }
@@ -193,41 +190,47 @@ namespace AdventOfCode2020
                                     & field[1] != "hzl" & field[1] != "oth") { validity = false; }
                                 break;
                             case "pid":
-                                if (!Regex.IsMatch(field[1], @"[0-9]{9}"))
+                                if (!Regex.IsMatch(field[1], @"^[0-9]{9}$"))
                                 {
                                     validity = false;
                                 }
                                 break;
                             case "cid":
-                                containsCID = true;
+                                if(fields.Length != 8) { validity = false; }
+
                                 break;
                         }
                     }
-                    if (containsCID = true & fields.Length < 8)
-                    {
-                        validity = false;
-                    }
-                    else if (containsCID = false & fields.Length != 7) { 
-                        validity = false; 
-                    }
-                    return validity;
+                   if (validity == true) { 
+                        return fields; }
+                    else { return null; }
                 }
-                else { return false; }
-
+                else
+                {
+                    return null;
+                }
             }
 
-            public static int validatePassports( string listIn)
+            public static string validatePassports( string listIn)
             {
                 int passportCounter = 0;
+                string outputText = "";
                 string[] theList = Regex.Split(listIn, @"\r\n\r\n");
                 for (int i = 0; i < theList.Length; i++)
                 {
-                    if (validatePassport(theList[i]))
+                        string[] passport = validatePassport(theList[i]);
+                    if (passport != null)
                     {
                         passportCounter++;
+                        for (int j = 0; j < passport.Length; j++)
+                        {
+                            outputText += passport[j];
+                            outputText += ", ";
+                        }
+                        outputText += "\n";
                     }
                 }
-                return passportCounter;
+                return Convert.ToString(passportCounter) + "\n" + outputText;
             }
             public static int checkPassports( string listIn)
             {
