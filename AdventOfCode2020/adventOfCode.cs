@@ -264,5 +264,93 @@ namespace AdventOfCode2020
 
             }
         }
+
+        static public class day5
+        {
+
+            static public int getHighestID(string seatList)
+            {
+                string[] theList = Regex.Split(seatList, @"\n");
+                int highestID = 0, seatID;
+                for (int i = 0; i < theList.Length; i++)
+                {
+                    int rowLow = 0, rowHigh = 127, columnLow = 0, columnHigh = 7;
+                    for (int j = 0; rowLow != rowHigh; j++)
+                    {
+                        if (theList[i][j] == 'B')
+                        {
+                            rowLow = rowHigh - ((rowHigh - rowLow + 1) / 2) + 1;
+                        }
+                        else
+                        {
+                            rowHigh = rowLow + ((rowHigh - rowLow + 1) / 2) - 1;
+                        }
+                    }
+                    for (int j = 0; columnLow != columnHigh; j++)
+                    {
+                        if (theList[i][j + 7] == 'R')
+                        {
+                            columnLow = columnHigh - ((columnHigh - columnLow + 1) / 2) + 1;
+                        }
+                        else
+                        {
+                            columnHigh = columnLow + ((columnHigh - columnLow + 1) / 2) - 1;
+                        }
+                    }
+                    seatID = (rowHigh) * 8 + columnHigh;
+                    if (seatID > highestID) { highestID = seatID; }
+                }
+
+                return highestID;
+            }
+
+
+            static private int getSeatID(string seatCode)
+            {
+                int rowLow = 0, rowHigh = 127, columnLow = 0, columnHigh = 7;
+                for (int j = 0; rowLow != rowHigh; j++)
+                {
+                    if (seatCode[j] == 'B')
+                    {
+                        rowLow = rowHigh - ((rowHigh - rowLow + 1) / 2) + 1;
+                    }
+                    else
+                    {
+                        rowHigh = rowLow + ((rowHigh - rowLow + 1) / 2) - 1;
+                    }
+                }
+                for (int j = 0; columnLow != columnHigh; j++)
+                {
+                    if (seatCode[j + 7] == 'R')
+                    {
+                        columnLow = columnHigh - ((columnHigh - columnLow + 1) / 2) + 1;
+                    }
+                    else
+                    {
+                        columnHigh = columnLow + ((columnHigh - columnLow + 1) / 2) - 1;
+                    }
+                }
+                return (rowHigh) * 8 + columnHigh;
+            }
+            static public int findEmptySeat(string seatList)
+            {
+                string[] theList = Regex.Split(seatList, @"\n");
+                List<int> newSeatList = new List<int>();
+                for (int i = 0; i < theList.Length; i++)
+                {
+                    newSeatList.Add(getSeatID(theList[i]));
+                }
+                int lastCount = 0, newCount = 0;
+                newSeatList.Sort();
+                for (int i = 0; i < newSeatList.Count; i++)
+                {
+                    if (newSeatList[i] + 1 != newSeatList[i + 1])
+                    {
+                        return newSeatList[i] + 1;
+                    }
+                }
+                return 0;
+            }
+        }
     }
 }

@@ -1,0 +1,17 @@
+﻿<Window x:Class="AdventOfCode2020.day5"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdventOfCode2020"
+        mc:Ignorable="d"
+        Title="day5" Height="450" Width="458.571">
+    <Grid Margin="0,0,2,0">
+        <TextBox x:Name="InputText" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True"/>
+        <Button x:Name="scanSeatsBtn" Content="Scan Seats" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="149" Click="scanSeatsClick"/>
+        <TextBox x:Name="OutputText" HorizontalAlignment="Left" Height="374" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
+        <Button x:Name="findEmptySeatsBtn" Content="Find Empty Seat" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top" Width="149" Click="findEmptySeatClick"/>
+        <TextBox x:Name="NewOutputText" HorizontalAlignment="Left" Height="374" Margin="289,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
+
+    </Grid>
+</Window>
