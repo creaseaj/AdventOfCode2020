@@ -31,7 +31,7 @@ namespace AdventOfCode2020
 
         private void findEmptySeatClick(object sender, RoutedEventArgs e)
         {
-            NewOutputText.Text = Convert.ToString(adventOfCode.day5.findEmptySeat(InputText.Text));
+            NewOutputText.Text = Convert.ToString(adventOfCode.day6.countAllAnswers(InputText.Text));
 
         }
     }

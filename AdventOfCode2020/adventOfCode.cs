@@ -384,6 +384,35 @@ namespace AdventOfCode2020
 
                 return totalCount;
             }
+            public static int countAllAnswers(string inputList)
+            {
+                int totalCount = 0;
+                string[] theList = Regex.Split(inputList, @"\r\n\r\n");
+                // theList contains lists of groups of answers
+                for (int i = 0; i < theList.Length; i++)
+                {
+                    string[] answers = Regex.Split(theList[i], @"\r\n");
+                    // answers contains separate answers
+                    int[] answercount = new int[128];
+                    for (int j = 0; j < answers.Length; j++)
+                    {
+                        for (int k = 0; k < answers[j].Length; k++)
+                        {
+                            answercount[Convert.ToInt32(answers[j][k])] += 1;
+
+                        }
+
+
+                    }
+                    for (int j = 0; j < answercount.Length; j++)
+                    {
+                        if (answercount[j] == answers.Length) { totalCount++; }
+                    }
+
+                }
+
+                return totalCount;
+            }
         }
     }
 }
