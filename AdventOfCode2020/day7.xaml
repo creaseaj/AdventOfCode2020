@@ -1,0 +1,17 @@
+﻿<Window x:Class="AdventOfCode2020.day7"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdventOfCode2020"
+        mc:Ignorable="d"
+        Title="day7" Height="450" Width="424.4">
+    <Grid Margin="0,0,10,-0.2">
+        <TextBox x:Name="InputTextBx" HorizontalAlignment="Left" Height="403" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True" Text="light red bags contain 1 bright white bag, 2 muted yellow bags.&#xD;&#xA;dark orange bags contain 3 bright white bags, 4 muted yellow bags.&#xD;&#xA;bright white bags contain 1 shiny gold bag.&#xD;&#xA;muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.&#xD;&#xA;shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.&#xD;&#xA;dark olive bags contain 3 faded blue bags, 4 dotted black bags.&#xD;&#xA;vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.&#xD;&#xA;faded blue bags contain no other bags.&#xD;&#xA;dotted black bags contain no other bags."/>
+        <Button x:Name="checkBagsBtn" Content="Check Bags" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="135,10,0,0" Click="checkBagsBtnClick"/>
+        <TextBox x:Name="OutputTextBx" HorizontalAlignment="Left" Height="379" Margin="135,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="checkBagsBtn_Copy" Content="Check In Bags" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="260,10,0,0" Click="checkInBagsBtnClick"/>
+        <TextBox x:Name="OutputTextBxNew" HorizontalAlignment="Left" Height="379" Margin="260,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</Window>

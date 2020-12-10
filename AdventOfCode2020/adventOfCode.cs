@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 namespace AdventOfCode2020
 {
-    static class adventOfCode
+    class adventOfCode
     {
         static public class day1
         {
@@ -412,6 +412,76 @@ namespace AdventOfCode2020
                 }
 
                 return totalCount;
+            }
+        }
+
+        public class day7
+        {
+            static public int checkBags(string bagListIn)
+            {
+                string[] theList = Regex.Split(bagListIn, @".\r\n");
+                bool newBagsAdded = true;
+                List<string> containsShinyBag = new List<string>();
+                List<List<string>> bagList = new List<List<string>>();
+                for (int i = 0; i < theList.Length; i++)
+                {
+
+                    string[] bagDetails = Regex.Split(theList[i].Substring(0,theList[i].Length), @" bags contain ");
+                    List<string> insideBags = new List<string>(Regex.Split(Regex.Replace(bagDetails[1],@"[0-9] | bags| bag|\.", "") , @", "));
+                    List<string> allBags = new List<string>();
+                    allBags.Add(bagDetails[0]);
+                    allBags.AddRange(insideBags);
+                    bagList.Add(allBags);
+                    if (insideBags.IndexOf("shiny gold") >= 0){ containsShinyBag.Add(bagDetails[0]); }
+                }
+
+                while (newBagsAdded == true)
+                {
+                    newBagsAdded = false;
+                    for(int i = 0; i < bagList.Count; i++)
+                    {
+                        for(int j = 1; j < bagList[i].Count; j++)
+                        {
+                            if((containsShinyBag.IndexOf(bagList[i][j]) >= 0) & containsShinyBag.IndexOf(bagList[i][0]) == -1)
+                            {
+                                    containsShinyBag.Add(bagList[i][0]); newBagsAdded = true;
+                            }
+                        }
+                    }
+                }
+                return containsShinyBag.Count;
+            }
+            static public int createBagDictionary(string listIn)
+            {
+                string[] theList = Regex.Split(listIn, @".\r\n");
+                List<string> containsShinyBag = new List<string>();
+                Dictionary<string, List<string>> bagList = new Dictionary<string, List<string>>();
+                for (int i = 0; i < theList.Length; i++)
+                {
+
+                    string[] bagDetails = Regex.Split(theList[i].Substring(0, theList[i].Length), @" bags contain ");
+                    List<string> insideBags = new List<string>(Regex.Split(Regex.Replace(bagDetails[1], @" bags| bag|\.", ""), @", "));
+                    bagList.Add(bagDetails[0], insideBags);
+                }
+                
+                return checkBagContents("shiny gold", bagList) - 1;
+            }
+            static public int checkBagContents(string bagIn, IDictionary<string,List<string>> bagList)
+            {
+                int count = 0, bagContentsNum, numOfBags;
+                if (bagList[bagIn][0] != "no other")
+                {
+                    for (int i = 0; i < bagList[bagIn].Count; i++)
+                    {
+                        numOfBags = Convert.ToInt32(bagList[bagIn][i].Substring(0, 1));
+                        bagContentsNum = checkBagContents(bagList[bagIn][i].Substring(2, bagList[bagIn][i].Length - 2), bagList);
+                        count += (numOfBags * bagContentsNum );
+                    }
+                    count++;
+                }
+                else { return 1; }
+
+                return  count;
             }
         }
     }
