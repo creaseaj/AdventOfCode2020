@@ -415,7 +415,7 @@ namespace AdventOfCode2020
             }
         }
 
-        public class day7
+        static public class day7
         {
             static public int checkBags(string bagListIn)
             {
@@ -482,6 +482,93 @@ namespace AdventOfCode2020
                 else { return 1; }
 
                 return  count;
+            }
+        }
+
+        static public class day8
+        {
+            static public int runCode(string codeIn)
+            {
+                int pointer = 0, accumulator = 0, target = 1;
+                string[] theList = Regex.Split(codeIn, @"\r\n");
+                List<int> readCommands = new List<int>();
+                while (readCommands.IndexOf(pointer) == -1 & pointer != theList.Length)
+                {
+                    readCommands.Add(pointer);
+                    switch (theList[pointer].Substring(0, 3))
+                    {
+                        case "nop":
+                            pointer++;
+                            break;
+                        case "acc":
+                            accumulator += Convert.ToInt32(theList[pointer].Substring(4, theList[pointer].Length - 4));
+                            pointer++;
+                            break;
+                        case "jmp":
+                            pointer += Convert.ToInt32(theList[pointer].Substring(4, theList[pointer].Length - 4));
+                            break;
+                    }
+                    if(readCommands.IndexOf(pointer) != -1)
+                    {
+                        break;
+                    }
+                }
+                return accumulator;
+            }
+            static public int runCodeEnd(string codeIn)
+            {
+                int pointer = 0, accumulator = 0;
+                bool end = false;
+                string[] theList = Regex.Split(codeIn, @"\r\n");
+                while (pointer != theList.Length)
+                {
+                    int change = Convert.ToInt32(theList[pointer].Substring(4, theList[pointer].Length - 4));
+                    string cmd = theList[pointer].Substring(0, 3);
+                    switch (cmd)
+                    {
+                        case "nop":
+                            end = checkEnd(theList, pointer);
+                            if (end) {
+                                pointer += change;
+                            }
+                            else
+                            {
+                                pointer++;
+                            }
+                            break;
+                        case "acc":
+                            accumulator += change;
+                            pointer++;
+                            break;
+                        case "jmp":
+                            end = checkEnd(theList, pointer);
+                            if (end)
+                            {
+                                pointer++;
+                            }
+                            else
+                            {
+                                pointer += change;
+                            }
+                            break;
+                    }
+                }
+                return accumulator;
+            }
+            static public bool checkEnd(string[] code, int pointer)
+            {
+                switch (code[pointer].Substring(0, 3))
+                {
+                    case "jmp":
+                        pointer++;
+                        break;
+                    case "nop":
+                        pointer += Convert.ToInt32(code[pointer].Substring(4, code[pointer].Length - 4));
+                        break;
+                }
+                if (pointer == code.Length - 1) { 
+                    return true; }
+                else { return false; }
             }
         }
     }
