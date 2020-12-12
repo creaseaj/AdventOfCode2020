@@ -1,0 +1,17 @@
+﻿<Window x:Class="AdventOfCode2020.day9"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdventOfCode2020"
+        mc:Ignorable="d"
+        Title="day9" Height="450" Width="395.6">
+    <Grid>
+        <TextBox x:Name="InputTxt" HorizontalAlignment="Left" Height="403" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True"/>
+        <Button Content="Check Numbers" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120" Click="chkNumBtnClk"/>
+        <TextBox x:Name="OutputTxt" HorizontalAlignment="Left" Height="378" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Break Numbers" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="120" Click="brkNumBtnClk"/>
+        <TextBox x:Name="BrkTxt" HorizontalAlignment="Left" Height="378" Margin="260,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</Window>

@@ -18,7 +18,8 @@ namespace AdventOfCode2020
                 {
                     for (int j = 0; j < theList.Length; j++)
                     {
-                        if (Convert.ToInt32(theList[i]) + Convert.ToInt32(theList[j]) == 2020){
+                        if (Convert.ToInt32(theList[i]) + Convert.ToInt32(theList[j]) == 2020)
+                        {
                             numberOut = Convert.ToInt32(theList[i]) * Convert.ToInt32(theList[j]);
                             break;
                         }
@@ -26,7 +27,7 @@ namespace AdventOfCode2020
                 }
                 return numberOut;
             }
-            
+
             static public int find3Numbers(string NumberList)
             {
                 int numberOut = 0;
@@ -56,9 +57,9 @@ namespace AdventOfCode2020
             public static int tobogganCorp(string listIn)
             {
                 List<List<int>> passArray = new List<List<int>>();
-                int counter,counterOut = 0;
+                int counter, counterOut = 0;
                 string[] theList = Regex.Split(listIn, @"\n| |-");
-                for(int i = 0; i < theList.Length; i += 4)
+                for (int i = 0; i < theList.Length; i += 4)
                 {
                     counter = 0;
                     int rangeLow = Convert.ToInt32(theList[i]);
@@ -92,7 +93,7 @@ namespace AdventOfCode2020
                     int secondPlace = Convert.ToInt32(theList[i + 1]);
                     char charFind = theList[i + 2][0];
                     string password = theList[i + 3];
-                    if (password[firstPlace - 1] == charFind ^ password[secondPlace- 1] == charFind)
+                    if (password[firstPlace - 1] == charFind ^ password[secondPlace - 1] == charFind)
                     {
                         counterOut++;
                     }
@@ -128,7 +129,7 @@ namespace AdventOfCode2020
             }
             public static double secondPathTrees(string theMap)
             {
-                double output =  checkRun(theMap,1,1) * checkRun(theMap,3,1) * checkRun(theMap,5,1) * checkRun(theMap,7,1) * checkRun(theMap,1,2);
+                double output = checkRun(theMap, 1, 1) * checkRun(theMap, 3, 1) * checkRun(theMap, 5, 1) * checkRun(theMap, 7, 1) * checkRun(theMap, 1, 2);
                 return output;
             }
         }
@@ -196,13 +197,15 @@ namespace AdventOfCode2020
                                 }
                                 break;
                             case "cid":
-                                if(fields.Length != 8) { validity = false; }
+                                if (fields.Length != 8) { validity = false; }
 
                                 break;
                         }
                     }
-                   if (validity == true) { 
-                        return fields; }
+                    if (validity == true)
+                    {
+                        return fields;
+                    }
                     else { return null; }
                 }
                 else
@@ -211,14 +214,14 @@ namespace AdventOfCode2020
                 }
             }
 
-            public static string validatePassports( string listIn)
+            public static string validatePassports(string listIn)
             {
                 int passportCounter = 0;
                 string outputText = "";
                 string[] theList = Regex.Split(listIn, @"\r\n\r\n");
                 for (int i = 0; i < theList.Length; i++)
                 {
-                        string[] passport = validatePassport(theList[i]);
+                    string[] passport = validatePassport(theList[i]);
                     if (passport != null)
                     {
                         passportCounter++;
@@ -232,18 +235,18 @@ namespace AdventOfCode2020
                 }
                 return Convert.ToString(passportCounter) + "\n" + outputText;
             }
-            public static int checkPassports( string listIn)
+            public static int checkPassports(string listIn)
             {
-                int counter = 0, passportCounter = 0 ;
+                int counter = 0, passportCounter = 0;
                 bool ContainsCID = false;
-                
+
                 string[] theList = Regex.Split(listIn, @"\r\n\r\n");
-                for(int i = 0; i < theList.Length; i++)
+                for (int i = 0; i < theList.Length; i++)
                 {
                     string[] toSplit = Regex.Split(theList[i], @" |\r\n");
-                    for(int j = 0; j < toSplit.Length; j++)
+                    for (int j = 0; j < toSplit.Length; j++)
                     {
-                        if(toSplit[j].Substring(0,3) == "cid")
+                        if (toSplit[j].Substring(0, 3) == "cid")
                         {
                             ContainsCID = true;
                             if (toSplit.Length == 8)
@@ -360,14 +363,14 @@ namespace AdventOfCode2020
                 int totalCount = 0;
                 string[] theList = Regex.Split(inputList, @"\r\n\r\n");
                 // theList contains lists of groups of answers
-                for(int i = 0; i < theList.Length; i++)
+                for (int i = 0; i < theList.Length; i++)
                 {
                     string[] answers = Regex.Split(theList[i], @"\r\n");
                     // answers contains separate answers
                     int[] answercount = new int[128];
-                    for(int j = 0; j < answers.Length; j++)
+                    for (int j = 0; j < answers.Length; j++)
                     {
-                        for(int k = 0; k < answers[j].Length; k++)
+                        for (int k = 0; k < answers[j].Length; k++)
                         {
                             answercount[Convert.ToInt32(answers[j][k])] = 1;
 
@@ -375,9 +378,9 @@ namespace AdventOfCode2020
 
 
                     }
-                    for(int j = 0; j < answercount.Length; j++)
+                    for (int j = 0; j < answercount.Length; j++)
                     {
-                        if(answercount[j] != 0) { totalCount++; }
+                        if (answercount[j] != 0) { totalCount++; }
                     }
 
                 }
@@ -426,25 +429,25 @@ namespace AdventOfCode2020
                 for (int i = 0; i < theList.Length; i++)
                 {
 
-                    string[] bagDetails = Regex.Split(theList[i].Substring(0,theList[i].Length), @" bags contain ");
-                    List<string> insideBags = new List<string>(Regex.Split(Regex.Replace(bagDetails[1],@"[0-9] | bags| bag|\.", "") , @", "));
+                    string[] bagDetails = Regex.Split(theList[i].Substring(0, theList[i].Length), @" bags contain ");
+                    List<string> insideBags = new List<string>(Regex.Split(Regex.Replace(bagDetails[1], @"[0-9] | bags| bag|\.", ""), @", "));
                     List<string> allBags = new List<string>();
                     allBags.Add(bagDetails[0]);
                     allBags.AddRange(insideBags);
                     bagList.Add(allBags);
-                    if (insideBags.IndexOf("shiny gold") >= 0){ containsShinyBag.Add(bagDetails[0]); }
+                    if (insideBags.IndexOf("shiny gold") >= 0) { containsShinyBag.Add(bagDetails[0]); }
                 }
 
                 while (newBagsAdded == true)
                 {
                     newBagsAdded = false;
-                    for(int i = 0; i < bagList.Count; i++)
+                    for (int i = 0; i < bagList.Count; i++)
                     {
-                        for(int j = 1; j < bagList[i].Count; j++)
+                        for (int j = 1; j < bagList[i].Count; j++)
                         {
-                            if((containsShinyBag.IndexOf(bagList[i][j]) >= 0) & containsShinyBag.IndexOf(bagList[i][0]) == -1)
+                            if ((containsShinyBag.IndexOf(bagList[i][j]) >= 0) & containsShinyBag.IndexOf(bagList[i][0]) == -1)
                             {
-                                    containsShinyBag.Add(bagList[i][0]); newBagsAdded = true;
+                                containsShinyBag.Add(bagList[i][0]); newBagsAdded = true;
                             }
                         }
                     }
@@ -463,10 +466,10 @@ namespace AdventOfCode2020
                     List<string> insideBags = new List<string>(Regex.Split(Regex.Replace(bagDetails[1], @" bags| bag|\.", ""), @", "));
                     bagList.Add(bagDetails[0], insideBags);
                 }
-                
+
                 return checkBagContents("shiny gold", bagList) - 1;
             }
-            static public int checkBagContents(string bagIn, IDictionary<string,List<string>> bagList)
+            static public int checkBagContents(string bagIn, IDictionary<string, List<string>> bagList)
             {
                 int count = 0, bagContentsNum, numOfBags;
                 if (bagList[bagIn][0] != "no other")
@@ -475,13 +478,13 @@ namespace AdventOfCode2020
                     {
                         numOfBags = Convert.ToInt32(bagList[bagIn][i].Substring(0, 1));
                         bagContentsNum = checkBagContents(bagList[bagIn][i].Substring(2, bagList[bagIn][i].Length - 2), bagList);
-                        count += (numOfBags * bagContentsNum );
+                        count += (numOfBags * bagContentsNum);
                     }
                     count++;
                 }
                 else { return 1; }
 
-                return  count;
+                return count;
             }
         }
 
@@ -508,7 +511,7 @@ namespace AdventOfCode2020
                             pointer += Convert.ToInt32(theList[pointer].Substring(4, theList[pointer].Length - 4));
                             break;
                     }
-                    if(readCommands.IndexOf(pointer) != -1)
+                    if (readCommands.IndexOf(pointer) != -1)
                     {
                         break;
                     }
@@ -519,7 +522,8 @@ namespace AdventOfCode2020
             {
                 string change = codeIn[pointer].Substring(4, codeIn[pointer].Length - 4);
                 string cmd = codeIn[pointer].Substring(0, 3);
-                switch (cmd){
+                switch (cmd)
+                {
                     case "nop":
                         codeIn[pointer] = "jmp " + change;
                         break;
@@ -571,15 +575,70 @@ namespace AdventOfCode2020
             }
             static public int runCodeEnd(string codeIn)
             {
-                int pointer = 0, accumulator = 0,result ;
+                int pointer = 0, accumulator = 0, result;
                 string[] code = Regex.Split(codeIn, @"\r\n");
-                for(int i = 0; i < code.Length; i++)
+                for (int i = 0; i < code.Length; i++)
                 {
-                    result = runCodeBase(code,i);
+                    result = runCodeBase(code, i);
                     if (result != 0) { return result; }
                 }
                 return accumulator;
 
+            }
+        }
+        static public class day9
+        {
+            public static double runXmas(string codeStr)
+            {
+                double[] numbers = Array.ConvertAll(Regex.Split(codeStr, @"\r\n"), double.Parse);
+                int preamble = 25;
+                for (int i = preamble; i < numbers.Length; i++)
+                {
+                    if (!checkXmas(numbers, i, preamble)) { return numbers[i]; }
+                }
+                return 0;
+            }
+            public static bool checkXmas(double[] numbers, int pointer, int preamble)
+            {
+                for (int i = pointer - preamble; i < pointer; i++)
+                {
+                    for (int j = pointer - preamble; j < pointer; j++)
+                    {
+                        if (i != j & numbers[i] + numbers[j] == numbers[pointer]) { return true; }
+                    }
+                }
+                return false;
+            }
+            public static double breakXmas(string codeStr)
+            {
+                List<double> numbers = Array.ConvertAll(Regex.Split(codeStr, @"\r\n"), double.Parse).ToList();
+                double sum = 0;
+                double target = runXmas(codeStr);
+                for(int i = 0; i <= numbers.IndexOf(target); i++)
+                {
+                    sum = 0;
+                    for(int j = i; j <= numbers.IndexOf(target); j++)
+                    {
+                        sum += numbers[j];
+                        if (sum == target)
+                        {
+                            return findHighLow(i, j, numbers);
+                        }
+                        else if(sum > target) { break; }
+                    }
+                }
+                return 0;
+            }
+            public static double findHighLow(int low, int high, List<double> numbers)
+            {
+                double highest = 0, lowest = numbers[low];
+                for(int i = low; i <= high; i++)
+                {
+                    if (numbers[i] > highest) { highest = numbers[i]; }
+                    if (numbers[i] < lowest) { lowest = numbers[i]; }
+                }
+
+                return lowest + highest;
             }
         }
     }
