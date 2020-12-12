@@ -515,21 +515,35 @@ namespace AdventOfCode2020
                 }
                 return accumulator;
             }
-            static public int runCodeEnd(string codeIn)
+            static public string[] swapCode(string[] codeIn, int pointer)
+            {
+                string change = codeIn[pointer].Substring(4, codeIn[pointer].Length - 4);
+                string cmd = codeIn[pointer].Substring(0, 3);
+                switch (cmd){
+                    case "nop":
+                        codeIn[pointer] = "jmp " + change;
+                        break;
+                    case "acc":
+                        break;
+                    case "jmp":
+                        codeIn[pointer] = "jmp " + change;
+                        break;
+                }
+                return codeIn;
+            }
+            static public int runCodeBase(string[] codeIn, int toSwap)
             {
                 int pointer = 0, accumulator = 0;
-                bool end = false;
-                string[] theList = Regex.Split(codeIn, @"\r\n");
-                while (pointer != theList.Length)
+                List<int> readCommands = new List<int>();
+                while (readCommands.IndexOf(pointer) == -1 & pointer != codeIn.Length)
                 {
-                    int change = Convert.ToInt32(theList[pointer].Substring(4, theList[pointer].Length - 4));
-                    string cmd = theList[pointer].Substring(0, 3);
-                    switch (cmd)
+                    readCommands.Add(pointer);
+                    switch (codeIn[pointer].Substring(0, 3))
                     {
                         case "nop":
-                            end = checkEnd(theList, pointer);
-                            if (end) {
-                                pointer += change;
+                            if (toSwap == pointer)
+                            {
+                                pointer += Convert.ToInt32(codeIn[pointer].Substring(4, codeIn[pointer].Length - 4));
                             }
                             else
                             {
@@ -537,38 +551,35 @@ namespace AdventOfCode2020
                             }
                             break;
                         case "acc":
-                            accumulator += change;
+                            accumulator += Convert.ToInt32(codeIn[pointer].Substring(4, codeIn[pointer].Length - 4));
                             pointer++;
                             break;
                         case "jmp":
-                            end = checkEnd(theList, pointer);
-                            if (end)
-                            {
-                                pointer++;
-                            }
+                            if (toSwap == pointer) { pointer++; }
                             else
                             {
-                                pointer += change;
+                                pointer += Convert.ToInt32(codeIn[pointer].Substring(4, codeIn[pointer].Length - 4));
                             }
                             break;
+                    }
+                    if (readCommands.IndexOf(pointer) != -1)
+                    {
+                        return 0;
                     }
                 }
                 return accumulator;
             }
-            static public bool checkEnd(string[] code, int pointer)
+            static public int runCodeEnd(string codeIn)
             {
-                switch (code[pointer].Substring(0, 3))
+                int pointer = 0, accumulator = 0,result ;
+                string[] code = Regex.Split(codeIn, @"\r\n");
+                for(int i = 0; i < code.Length; i++)
                 {
-                    case "jmp":
-                        pointer++;
-                        break;
-                    case "nop":
-                        pointer += Convert.ToInt32(code[pointer].Substring(4, code[pointer].Length - 4));
-                        break;
+                    result = runCodeBase(code,i);
+                    if (result != 0) { return result; }
                 }
-                if (pointer == code.Length - 1) { 
-                    return true; }
-                else { return false; }
+                return accumulator;
+
             }
         }
     }
