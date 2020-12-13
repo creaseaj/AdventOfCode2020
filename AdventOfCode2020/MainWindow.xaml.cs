@@ -25,57 +25,91 @@ namespace AdventOfCode2020
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void d1p1Clk(object sender, RoutedEventArgs e)
         {
-            Window day1Window = new day1();
-            day1Window.Show();
-        }
-        private void day2_Click(object sender, RoutedEventArgs e)
-        {
-            Window day2Window = new day2();
-            day2Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day1.findNumbers(InputTxt.Text));
         }
 
-        private void day3_Click(object sender, RoutedEventArgs e)
+        private void d1p2Clk(object sender, RoutedEventArgs e)
         {
-            Window day3Window = new day3();
-            day3Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day1.find3Numbers(InputTxt.Text));
         }
 
-        private void day4_Click(object sender, RoutedEventArgs e)
+        private void d2p1Clk(object sender, RoutedEventArgs e)
         {
-            Window day4Window = new day4();
-            day4Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day2.tobogganCorp(InputTxt.Text));
         }
 
-        private void day5Click(object sender, RoutedEventArgs e)
+        private void d2p2Clk(object sender, RoutedEventArgs e)
         {
-            Window day5Window = new day5();
-            day5Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day2.tobogganCorpIndex(InputTxt.Text));
         }
 
-        private void day6Click(object sender, RoutedEventArgs e)
+        private void d3p1Clk(object sender, RoutedEventArgs e)
         {
-            Window day6Window = new day6();
-            day6Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day3.firstPathTrees(InputTxt.Text));
         }
 
-        private void day7Click(object sender, RoutedEventArgs e)
+        private void d3p2Clk(object sender, RoutedEventArgs e)
         {
-            Window day7Window = new day7();
-            day7Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day3.secondPathTrees(InputTxt.Text));
         }
 
-        private void day8BtnClick(object sender, RoutedEventArgs e)
+        private void d4p1Clk(object sender, RoutedEventArgs e)
         {
-            Window day8Window = new day8();
-            day8Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day4.checkPassports(InputTxt.Text));
         }
-
-        private void day9BtnClick(object sender, RoutedEventArgs e)
+        private void d4p2Clk(object sender, RoutedEventArgs e)
         {
-            Window day9Window = new day9();
-            day9Window.Show();
+            OutputTxt.Text = Convert.ToString(adventOfCode.day4.validatePassports(InputTxt.Text));
+        }
+        private void d5p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day5.getHighestID(InputTxt.Text));
+        }
+        private void d5p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day5.findEmptySeat(InputTxt.Text));
+        }
+        private void d6p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day6.countAnswers(InputTxt.Text));
+        }
+        private void d6p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day6.countAllAnswers(InputTxt.Text));
+        }
+        private void d7p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day7.checkBags(InputTxt.Text));
+        }
+        private void d7p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day7.createBagDictionary(InputTxt.Text));
+        }
+        private void d8p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day8.runCode(InputTxt.Text));
+        }
+        private void d8p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day8.runCodeEnd(InputTxt.Text));
+        }
+        private void d9p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day9.runXmas(InputTxt.Text));
+        }
+        private void d9p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day9.breakXmas(InputTxt.Text));
+        }
+        private void d10p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day10.countJolts(InputTxt.Text));
+        }
+        private void d10p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day10.checkJoltVarieties(InputTxt.Text));
         }
     }
 }

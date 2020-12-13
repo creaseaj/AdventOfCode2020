@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="day10.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="day2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -102,6 +106,9 @@
     </Compile>
     <Compile Include="day1.xaml.cs">
       <DependentUpon>day1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="day10.xaml.cs">
+      <DependentUpon>day10.xaml</DependentUpon>
     </Compile>
     <Compile Include="day2.xaml.cs">
       <DependentUpon>day2.xaml</DependentUpon>

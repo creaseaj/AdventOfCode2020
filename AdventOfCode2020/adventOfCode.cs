@@ -8,7 +8,7 @@ namespace AdventOfCode2020
 {
     class adventOfCode
     {
-        static public class day1
+        public struct day1
         {
             static public int findNumbers(string numberList)
             {
@@ -51,8 +51,7 @@ namespace AdventOfCode2020
                 return numberOut;
             }
         }
-
-        static public class day2
+        public struct day2
         {
             public static int tobogganCorp(string listIn)
             {
@@ -102,8 +101,7 @@ namespace AdventOfCode2020
                 return counterOut;
             }
         }
-
-        static public class day3
+        public struct day3
         {
             private static int checkRun(string theMap, int right, int down)
             {
@@ -133,8 +131,7 @@ namespace AdventOfCode2020
                 return output;
             }
         }
-
-        static public class day4
+        public struct day4
         {
             static public string[] validatePassport(string passportIn)
             {
@@ -267,8 +264,7 @@ namespace AdventOfCode2020
 
             }
         }
-
-        static public class day5
+        public struct day5
         {
 
             static public int getHighestID(string seatList)
@@ -355,8 +351,7 @@ namespace AdventOfCode2020
                 return 0;
             }
         }
-
-        static public class day6
+        public struct day6
         {
             public static int countAnswers(string inputList)
             {
@@ -417,8 +412,7 @@ namespace AdventOfCode2020
                 return totalCount;
             }
         }
-
-        static public class day7
+        public struct day7
         {
             static public int checkBags(string bagListIn)
             {
@@ -487,8 +481,7 @@ namespace AdventOfCode2020
                 return count;
             }
         }
-
-        static public class day8
+        public struct day8
         {
             static public int runCode(string codeIn)
             {
@@ -586,7 +579,7 @@ namespace AdventOfCode2020
 
             }
         }
-        static public class day9
+        public struct day9
         {
             public static double runXmas(string codeStr)
             {
@@ -639,6 +632,55 @@ namespace AdventOfCode2020
                 }
 
                 return lowest + highest;
+            }
+        }
+        public struct day10
+        {
+            static private decimal counter = 0;
+            static public int countJolts(string joltStr)
+            {
+                List<int> jolts= Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
+                jolts.Sort();
+                jolts.Add(jolts[jolts.Count - 1] + 3);
+                int jolt = 0;
+                int[] joltChanges = new int[3];
+                for (int i = 0; i < jolts.Count; i++)
+                {
+                    joltChanges[jolts[i] - jolt - 1]++;
+                    jolt = jolts[i];
+                }
+                return joltChanges[0] * joltChanges[2];
+
+            }
+
+            static public decimal checkJoltVarieties(string joltStr)
+            {
+                List<int> joltList = Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
+                joltList.Add(0);
+                joltList.Sort();
+                joltList.Add(joltList[joltList.Count - 1] + 3);
+                int[] jolts = new int[joltList.Count];
+                Array.Copy(joltList.ToArray(), jolts, joltList.Count);
+                return enumeratevarieties(jolts, 1);
+            }
+            // note to self, you recorded the jumps so you know what can and can't be made, 1s are easy, 3s are impossible have a good morning ::)
+            static public decimal enumeratevarieties(int[] jolts, int enumerateFrom)
+            {
+                counter++;
+                decimal joltOut = 1;
+                int[] newJolts = new int[jolts.Length - 1];
+                for (int i = 1; i < jolts.Length; i++)
+                {
+                    if(jolts[i] - jolts[i-1] > 3){ return 0; }
+                }
+                // now gonna remove a jolt each time then check it again
+                for (int i = enumerateFrom; i < jolts.Length - 1; i++)
+                {
+                    Array.Copy(jolts,0, newJolts, 0, i );
+                    Array.Copy(jolts, i + 1, newJolts, i , newJolts.Length - i );
+                    joltOut += enumeratevarieties(newJolts, i);
+                }
+                return joltOut;
             }
         }
     }
