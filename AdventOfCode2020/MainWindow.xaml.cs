@@ -131,5 +131,10 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day13.getSoonestBus(InputTxt.Text));
         }
+
+        private void d13p2Clk(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

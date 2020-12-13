@@ -210,7 +210,6 @@ namespace AdventOfCode2020
                     return null;
                 }
             }
-
             public static string validatePassports(string listIn)
             {
                 int passportCounter = 0;
@@ -607,17 +606,17 @@ namespace AdventOfCode2020
                 List<double> numbers = Array.ConvertAll(Regex.Split(codeStr, @"\r\n"), double.Parse).ToList();
                 double sum = 0;
                 double target = runXmas(codeStr);
-                for(int i = 0; i <= numbers.IndexOf(target); i++)
+                for (int i = 0; i <= numbers.IndexOf(target); i++)
                 {
                     sum = 0;
-                    for(int j = i; j <= numbers.IndexOf(target); j++)
+                    for (int j = i; j <= numbers.IndexOf(target); j++)
                     {
                         sum += numbers[j];
                         if (sum == target)
                         {
                             return findHighLow(i, j, numbers);
                         }
-                        else if(sum > target) { break; }
+                        else if (sum > target) { break; }
                     }
                 }
                 return 0;
@@ -625,7 +624,7 @@ namespace AdventOfCode2020
             public static double findHighLow(int low, int high, List<double> numbers)
             {
                 double highest = 0, lowest = numbers[low];
-                for(int i = low; i <= high; i++)
+                for (int i = low; i <= high; i++)
                 {
                     if (numbers[i] > highest) { highest = numbers[i]; }
                     if (numbers[i] < lowest) { lowest = numbers[i]; }
@@ -638,14 +637,14 @@ namespace AdventOfCode2020
         {
             static public int countJolts(string joltStr)
             {
-                List<int> jolts= Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
+                List<int> jolts = Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
                 jolts.Add(0);
                 jolts.Sort();
                 jolts.Add(jolts[jolts.Count - 1] + 3);
                 int[] joltChanges = new int[3];
                 for (int i = 1; i < jolts.Count; i++)
                 {
-                    joltChanges[jolts[i] - jolts[i -1] - 1]++;
+                    joltChanges[jolts[i] - jolts[i - 1] - 1]++;
                 }
                 return joltChanges[0] * joltChanges[2];
 
@@ -660,11 +659,11 @@ namespace AdventOfCode2020
                 joltList.Add(0);
                 joltList.Sort();
                 joltList.Add(joltList[joltList.Count - 1] + 3);
-                for(int i = 1; i < joltList.Count; i++)
+                for (int i = 1; i < joltList.Count; i++)
                 {
                     differences.Add(joltList[i] - joltList[i - 1]);
                 }
-                for(int i = 1; i < differences.Count; i++)
+                for (int i = 1; i < differences.Count; i++)
                 {
                     //if (counter == 3)
                     //{
@@ -680,19 +679,22 @@ namespace AdventOfCode2020
                     //}
                     if (counter > 3)
                     {
-                        output = output * (Convert.ToInt32(Math.Pow(2,counter - 1)) - (counter - 3));
+                        output = output * (Convert.ToInt32(Math.Pow(2, counter - 1)) - (counter - 3));
                     }
-                    if (differences[i] == differences[i-1] & differences[i] == 1) { counter++; }
-                    else if (counter <= 3 & counter != 1){
+                    if (differences[i] == differences[i - 1] & differences[i] == 1) { counter++; }
+                    else if (counter <= 3 & counter != 1)
+                    {
                         output = output * Convert.ToInt32(Math.Pow(2, counter - 1));
-                        counter = 1; }
+                        counter = 1;
+                    }
                     else { counter = 1; }
                 }
                 return output;
             }
-            static private int factorial(int a) {
+            static private int factorial(int a)
+            {
                 int sumOut = a;
-                for (int i = a-1; i != 0; i--)
+                for (int i = a - 1; i != 0; i--)
                 {
                     sumOut = sumOut * i;
                 }
@@ -707,13 +709,13 @@ namespace AdventOfCode2020
                 int[] newJolts = new int[jolts.Length - 1];
                 for (int i = 1; i < jolts.Length; i++)
                 {
-                    if(jolts[i] - jolts[i-1] > 3){ return 0; }
+                    if (jolts[i] - jolts[i - 1] > 3) { return 0; }
                 }
                 // now gonna remove a jolt each time then check it again
                 for (int i = enumerateFrom; i < jolts.Length - 1; i++)
                 {
-                    Array.Copy(jolts,0, newJolts, 0, i );
-                    Array.Copy(jolts, i + 1, newJolts, i , newJolts.Length - i );
+                    Array.Copy(jolts, 0, newJolts, 0, i);
+                    Array.Copy(jolts, i + 1, newJolts, i, newJolts.Length - i);
                     joltOut += enumeratevarieties(newJolts, i);
                 }
                 return joltOut;
@@ -728,7 +730,7 @@ namespace AdventOfCode2020
                 for (int i = 0; i < seats1D.Length; i++)
                 {
                     oldLife[i] = new string[seats1D.Length];
-                    for(int j = 0; j < seats1D[i].Length; j++)
+                    for (int j = 0; j < seats1D[i].Length; j++)
                     {
                         oldLife[i][j] = Convert.ToString(seats1D[i][j]);
                     }
@@ -757,11 +759,11 @@ namespace AdventOfCode2020
             }
             private static bool compareArrays(string[][] arrA, string[][] arrB)
             {
-                for(int i = 0; i < arrA.Length; i++)
+                for (int i = 0; i < arrA.Length; i++)
                 {
-                    for(int j = 0; j < arrA[i].Length; j++)
+                    for (int j = 0; j < arrA[i].Length; j++)
                     {
-                        if(arrA[i][j] != arrB[i][j]) { return false; }
+                        if (arrA[i][j] != arrB[i][j]) { return false; }
                     }
                 }
                 return true;
@@ -769,7 +771,7 @@ namespace AdventOfCode2020
             private static string[][] runLife(string[][] seatsIn)
             {
                 string[][] lifeOut = new string[seatsIn.Length][];
-                for(int i = 0; i < seatsIn.Length; i++)
+                for (int i = 0; i < seatsIn.Length; i++)
                 {
                     lifeOut[i] = new string[seatsIn.Length];
                     Array.Copy(seatsIn[i], lifeOut[i], seatsIn[i].Length);
@@ -786,12 +788,13 @@ namespace AdventOfCode2020
                                 lifeOut[i][j] = Convert.ToString('#');
                             }
                         }
-                            
+
                     }
                 }
                 return lifeOut;
             }
-            private static int countOccupiedSeats(string[][] seatsIn, int row, int column) {
+            private static int countOccupiedSeats(string[][] seatsIn, int row, int column)
+            {
                 int occupiedSeats = 0;
                 for (int i = row - 1; i <= row + 1; i++)
                 {
@@ -799,7 +802,7 @@ namespace AdventOfCode2020
                     {
                         for (int j = column - 1; j <= column + 1; j++)
                         {
-                            if(i != row | j != column)
+                            if (i != row | j != column)
                             {
                                 if (j >= 0 & j != seatsIn[i].Length)
                                 {
@@ -819,7 +822,7 @@ namespace AdventOfCode2020
                 int v = 0, h = 0, facing = 1;
                 // facing 0 is north, east is 1 etc.
                 string[] Instructions = Regex.Split(codeIn, @"\r\n");
-                for(int i = 0; i < Instructions.Length; i++)
+                for (int i = 0; i < Instructions.Length; i++)
                 {
                     switch (Convert.ToString(Instructions[i][0]))
                     {
@@ -842,7 +845,7 @@ namespace AdventOfCode2020
                             facing -= Convert.ToInt32(Instructions[i].Substring(1)) / 90;
                             break;
                         case ("F"):
-                            switch(facing % 4)
+                            switch (facing % 4)
                             {
                                 case (0):
                                     v += Convert.ToInt32(Instructions[i].Substring(1));
@@ -875,11 +878,11 @@ namespace AdventOfCode2020
                 // did all that regex from memory because I don't have wifi rn and honestly can't believe it worked
                 int[] busIds = Array.ConvertAll(Regex.Split(busTimes[1], @"[,x]+,|,"), int.Parse);
                 int soonestBus = busIds[0];
-                for (int i =0; i < busIds.Length; i++)
+                for (int i = 0; i < busIds.Length; i++)
                 {
-                    if(waitTime(soonestBus,leavingTime)> waitTime(busIds[i],leavingTime)) { soonestBus = busIds[i]; }
+                    if (waitTime(soonestBus, leavingTime) > waitTime(busIds[i], leavingTime)) { soonestBus = busIds[i]; }
                 }
-                return soonestBus * waitTime(soonestBus,leavingTime);
+                return soonestBus * waitTime(soonestBus, leavingTime);
             }
 
             static private int waitTime(int busID, int time)
@@ -887,5 +890,17 @@ namespace AdventOfCode2020
                 return busID - time % busID;
             }
         }
+        public struct day14 { }
+        public struct day15 { }
+        public struct day16 { }
+        public struct day17 { }
+        public struct day18 { }
+        public struct day19 { }
+        public struct day20 { }
+        public struct day21 { }
+        public struct day22 { }
+        public struct day23 { }
+        public struct day24 { }
+        public struct day25 { }
     }
 }

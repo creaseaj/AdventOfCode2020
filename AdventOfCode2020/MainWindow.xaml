@@ -5,34 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventOfCode2020"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="427.4">
-    <Grid>
-        <TextBox x:Name="InputTxt" HorizontalAlignment="Left" Height="403" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True"/>
-        <TextBox x:Name="OutputTxt" HorizontalAlignment="Left" Height="403" Margin="135,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="D1 P1" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p1Clk"/>
-        <Button Content="D1 P2" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p2Clk"/>
-        <Button Content="D2 P1" HorizontalAlignment="Left" Margin="260,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p1Clk"/>
-        <Button Content="D3 P1" HorizontalAlignment="Left" Margin="260,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p1Clk"/>
-        <Button Content="D4 P1" HorizontalAlignment="Left" Margin="260,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p1Clk"/>
-        <Button Content="D5 P1" HorizontalAlignment="Left" Margin="260,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p1Clk"/>
-        <Button Content="D6 P1" HorizontalAlignment="Left" Margin="260,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p1Clk"/>
-        <Button Content="D7 P1" HorizontalAlignment="Left" Margin="260,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p1Clk"/>
-        <Button Content="D8 P1" HorizontalAlignment="Left" Margin="260,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p1Clk"/>
-        <Button Content="D9 P1" HorizontalAlignment="Left" Margin="260,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p1Clk"/>
-        <Button Content="D10 P1" HorizontalAlignment="Left" Margin="260,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk"/>
-        <Button Content="D10 P2" HorizontalAlignment="Left" Margin="340,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p2Clk"/>
-        <Button Content="D9 P2" HorizontalAlignment="Left" Margin="340,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p2Clk"/>
-        <Button Content="D8 P2" HorizontalAlignment="Left" Margin="340,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p2Clk"/>
-        <Button Content="D7 P2" HorizontalAlignment="Left" Margin="340,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p2Clk"/>
-        <Button Content="D6 P2" HorizontalAlignment="Left" Margin="340,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p2Clk"/>
-        <Button Content="D5 P2" HorizontalAlignment="Left" Margin="340,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p2Clk"/>
-        <Button Content="D4 P2" HorizontalAlignment="Left" Margin="340,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p2Clk"/>
-        <Button Content="D3 P2" HorizontalAlignment="Left" Margin="340,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p2Clk"/>
-        <Button Content="D2 P2" HorizontalAlignment="Left" Margin="340,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p2Clk"/>
-        <Button Content="D11 P1" HorizontalAlignment="Left" Margin="260,260,0,0" VerticalAlignment="Top" Width="75" Click="d11p1Clk"/>
-        <Button Content="D11 P2" HorizontalAlignment="Left" Margin="340,260,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk"/>
-        <Button Content="D12 P1" HorizontalAlignment="Left" Margin="260,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p1Clk"/>
-        <Button Content="D12 P2" HorizontalAlignment="Left" Margin="340,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p2Clk"/>
-        <Button Content="D13 P1" HorizontalAlignment="Left" Margin="260,310,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk"/>
+        Title="Advent Of Code 2020" Height="450" Width="510" Icon="AOCIcon.png">
+    <Grid Margin="0,0,-4.8,-0.2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="436*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="InputTxt" HorizontalAlignment="Left" Height="395" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="OutputTxt" HorizontalAlignment="Left" Height="395" Margin="62.2,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Button Content="D1 P1" HorizontalAlignment="Left" Margin="187.2,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p1Clk" Grid.Column="1"/>
+        <Button Content="D1 P2" HorizontalAlignment="Left" Margin="267.2,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p2Clk" Grid.Column="1"/>
+        <Button Content="D2 P1" HorizontalAlignment="Left" Margin="187.2,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p1Clk" Grid.Column="1"/>
+        <Button Content="D3 P1" HorizontalAlignment="Left" Margin="187.2,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p1Clk" Grid.Column="1"/>
+        <Button Content="D4 P1" HorizontalAlignment="Left" Margin="187.2,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p1Clk" Grid.Column="1"/>
+        <Button Content="D5 P1" HorizontalAlignment="Left" Margin="187.2,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p1Clk" Grid.Column="1"/>
+        <Button Content="D6 P1" HorizontalAlignment="Left" Margin="187.2,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p1Clk" Grid.Column="1"/>
+        <Button Content="D7 P1" HorizontalAlignment="Left" Margin="187.2,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p1Clk" Grid.Column="1"/>
+        <Button Content="D8 P1" HorizontalAlignment="Left" Margin="187.2,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p1Clk" Grid.Column="1"/>
+        <Button Content="D9 P1" HorizontalAlignment="Left" Margin="187.2,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p1Clk" Grid.Column="1"/>
+        <Button Content="D10 P1" HorizontalAlignment="Left" Margin="187.2,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk" Grid.Column="1"/>
+        <Button Content="D10 P2" HorizontalAlignment="Left" Margin="267.2,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p2Clk" Grid.Column="1"/>
+        <Button Content="D9 P2" HorizontalAlignment="Left" Margin="267.2,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p2Clk" Grid.Column="1"/>
+        <Button Content="D8 P2" HorizontalAlignment="Left" Margin="267.2,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p2Clk" Grid.Column="1"/>
+        <Button Content="D7 P2" HorizontalAlignment="Left" Margin="267.2,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p2Clk" Grid.Column="1"/>
+        <Button Content="D6 P2" HorizontalAlignment="Left" Margin="267.2,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p2Clk" Grid.Column="1"/>
+        <Button Content="D5 P2" HorizontalAlignment="Left" Margin="267.2,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p2Clk" Grid.Column="1"/>
+        <Button Content="D4 P2" HorizontalAlignment="Left" Margin="267.2,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p2Clk" Grid.Column="1"/>
+        <Button Content="D3 P2" HorizontalAlignment="Left" Margin="267.2,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p2Clk" Grid.Column="1"/>
+        <Button Content="D2 P2" HorizontalAlignment="Left" Margin="267.2,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p2Clk" Grid.Column="1"/>
+        <Button Content="D11 P1" HorizontalAlignment="Left" Margin="187.2,260,0,0" VerticalAlignment="Top" Width="75" Click="d11p1Clk" Grid.Column="1"/>
+        <Button Content="D11 P2" HorizontalAlignment="Left" Margin="267.2,260,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk" Grid.Column="1"/>
+        <Button Content="D12 P1" HorizontalAlignment="Left" Margin="187.2,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p1Clk" Grid.Column="1"/>
+        <Button Content="D12 P2" HorizontalAlignment="Left" Margin="267.2,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p2Clk" Grid.Column="1"/>
+        <Button Content="D13 P1" HorizontalAlignment="Left" Margin="187.2,310,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D13 P1" HorizontalAlignment="Left" Margin="267.2,310,0,0" VerticalAlignment="Top" Width="75" Click="d13p2Clk" Grid.Column="1"/>
+        <Button Content="D14 P1" HorizontalAlignment="Left" Margin="187.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D14 P2" HorizontalAlignment="Left" Margin="267.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D15 P1" HorizontalAlignment="Left" Margin="187.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D15 P2" HorizontalAlignment="Left" Margin="267.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D16 P1" HorizontalAlignment="Left" Margin="187.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D16P2" HorizontalAlignment="Left" Margin="267.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D17 P1" HorizontalAlignment="Left" Margin="347.2,10,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D17 P2" HorizontalAlignment="Left" Margin="347.2,35,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D18 P1" HorizontalAlignment="Left" Margin="347.2,60,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D18 P2" HorizontalAlignment="Left" Margin="347.2,85,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D19 P1" HorizontalAlignment="Left" Margin="347.2,110,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D20 P1" HorizontalAlignment="Left" Margin="347.2,160,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D21 P1" HorizontalAlignment="Left" Margin="347.2,210,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D22 P1" HorizontalAlignment="Left" Margin="347.2,260,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D23 P1" HorizontalAlignment="Left" Margin="347.2,310,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D24 P1" HorizontalAlignment="Left" Margin="347.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D19 P2" HorizontalAlignment="Left" Margin="347.2,135,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D20 P2" HorizontalAlignment="Left" Margin="347.2,185,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D21 P2" HorizontalAlignment="Left" Margin="347.2,235,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D22 P2" HorizontalAlignment="Left" Margin="347.2,285,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D23 P2" HorizontalAlignment="Left" Margin="347.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D24 P2" HorizontalAlignment="Left" Margin="347.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
     </Grid>
 </Window>
