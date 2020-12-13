@@ -812,5 +812,80 @@ namespace AdventOfCode2020
                 return occupiedSeats;
             }
         }
+        public struct day12
+        {
+            static public int getManhattanDistance(string codeIn)
+            {
+                int v = 0, h = 0, facing = 1;
+                // facing 0 is north, east is 1 etc.
+                string[] Instructions = Regex.Split(codeIn, @"\r\n");
+                for(int i = 0; i < Instructions.Length; i++)
+                {
+                    switch (Convert.ToString(Instructions[i][0]))
+                    {
+                        case ("N"):
+                            v += Convert.ToInt32(Instructions[i].Substring(1));
+                            break;
+                        case ("E"):
+                            h += Convert.ToInt32(Instructions[i].Substring(1));
+                            break;
+                        case ("S"):
+                            h -= Convert.ToInt32(Instructions[i].Substring(1));
+                            break;
+                        case ("W"):
+                            v -= Convert.ToInt32(Instructions[i].Substring(1));
+                            break;
+                        case ("R"):
+                            facing += Convert.ToInt32(Instructions[i].Substring(1)) / 90;
+                            break;
+                        case ("L"):
+                            facing -= Convert.ToInt32(Instructions[i].Substring(1)) / 90;
+                            break;
+                        case ("F"):
+                            switch(facing % 4)
+                            {
+                                case (0):
+                                    v += Convert.ToInt32(Instructions[i].Substring(1));
+                                    break;
+                                case (1):
+                                    h += Convert.ToInt32(Instructions[i].Substring(1));
+                                    break;
+                                case (2):
+                                    v -= Convert.ToInt32(Instructions[i].Substring(1));
+                                    break;
+                                case (3):
+                                    h -= Convert.ToInt32(Instructions[i].Substring(1));
+                                    break;
+
+                            }
+                            break;
+
+
+                    }
+                }
+                return Math.Abs(v) + Math.Abs(h);
+            }
+        }
+        public struct day13
+        {
+            static public int getSoonestBus(string busStr)
+            {
+                string[] busTimes = Regex.Split(busStr, @"\r\n");
+                int leavingTime = Convert.ToInt32(busTimes[0]);
+                // did all that regex from memory because I don't have wifi rn and honestly can't believe it worked
+                int[] busIds = Array.ConvertAll(Regex.Split(busTimes[1], @"[,x]+,|,"), int.Parse);
+                int soonestBus = busIds[0];
+                for (int i =0; i < busIds.Length; i++)
+                {
+                    if(waitTime(soonestBus,leavingTime)> waitTime(busIds[i],leavingTime)) { soonestBus = busIds[i]; }
+                }
+                return soonestBus * waitTime(soonestBus,leavingTime);
+            }
+
+            static private int waitTime(int busID, int time)
+            {
+                return busID - time % busID;
+            }
+        }
     }
 }

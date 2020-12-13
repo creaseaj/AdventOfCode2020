@@ -31,5 +31,8 @@
         <Button Content="D2 P2" HorizontalAlignment="Left" Margin="340,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p2Clk"/>
         <Button Content="D11 P1" HorizontalAlignment="Left" Margin="260,260,0,0" VerticalAlignment="Top" Width="75" Click="d11p1Clk"/>
         <Button Content="D11 P2" HorizontalAlignment="Left" Margin="340,260,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk"/>
+        <Button Content="D12 P1" HorizontalAlignment="Left" Margin="260,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p1Clk"/>
+        <Button Content="D12 P2" HorizontalAlignment="Left" Margin="340,285,0,0" VerticalAlignment="Top" Width="75" Click="d12p2Clk"/>
+        <Button Content="D13 P1" HorizontalAlignment="Left" Margin="260,310,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk"/>
     </Grid>
 </Window>
