@@ -111,5 +111,10 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day10.checkJoltVarieties(InputTxt.Text));
         }
+
+        private void d11p1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day11.countSeats(InputTxt.Text));
+        }
     }
 }

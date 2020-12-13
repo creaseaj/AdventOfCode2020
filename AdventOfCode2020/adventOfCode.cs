@@ -700,7 +700,7 @@ namespace AdventOfCode2020
             }
             // note to self, you recorded the jumps so you know what can and can't be made, 1s are easy, 3s are impossible have a good morning ::)
 
-            // enumeratevarieties is an awful way of solving the problem and should not be used >:(
+            // enumeratevarieties is an awful way of solving the problem and should not be used >:(, this is staying here because it's cool, not so people think they should use it
             static public decimal enumeratevarieties(int[] jolts, int enumerateFrom)
             {
                 decimal joltOut = 1;
@@ -717,6 +717,99 @@ namespace AdventOfCode2020
                     joltOut += enumeratevarieties(newJolts, i);
                 }
                 return joltOut;
+            }
+        }
+        public struct day11
+        {
+            public static int countSeats(string seatsStr)
+            {
+                string[] seats1D = Regex.Split(seatsStr, @"\r\n");
+                string[][] oldLife = new string[seats1D.Length][];
+                for (int i = 0; i < seats1D.Length; i++)
+                {
+                    oldLife[i] = new string[seats1D.Length];
+                    for(int j = 0; j < seats1D[i].Length; j++)
+                    {
+                        oldLife[i][j] = Convert.ToString(seats1D[i][j]);
+                    }
+                }
+                string[][] newLife = new String[oldLife.Length][];
+                newLife = runLife(oldLife);
+                while (!compareArrays(newLife, oldLife))
+                {
+                    newLife = runLife(oldLife);
+                    oldLife = runLife(newLife);
+                }
+
+                return countFreeSeats(newLife);
+            }
+            private static int countFreeSeats(string[][] arrA)
+            {
+                int counter = 0;
+                for (int i = 0; i < arrA.Length; i++)
+                {
+                    for (int j = 0; j < arrA[i].Length; j++)
+                    {
+                        if (arrA[i][j] == Convert.ToString('#')) { counter++; }
+                    }
+                }
+                return counter;
+            }
+            private static bool compareArrays(string[][] arrA, string[][] arrB)
+            {
+                for(int i = 0; i < arrA.Length; i++)
+                {
+                    for(int j = 0; j < arrA[i].Length; j++)
+                    {
+                        if(arrA[i][j] != arrB[i][j]) { return false; }
+                    }
+                }
+                return true;
+            }
+            private static string[][] runLife(string[][] seatsIn)
+            {
+                string[][] lifeOut = new string[seatsIn.Length][];
+                for(int i = 0; i < seatsIn.Length; i++)
+                {
+                    lifeOut[i] = new string[seatsIn.Length];
+                    Array.Copy(seatsIn[i], lifeOut[i], seatsIn[i].Length);
+                    for (int j = 0; j < seatsIn[i].Length; j++)
+                    {
+                        if (seatsIn[i][j] == Convert.ToString('#') | seatsIn[i][j] == Convert.ToString('L'))
+                        {
+                            if (countOccupiedSeats(seatsIn, i, j) >= 4)
+                            {
+                                lifeOut[i][j] = Convert.ToString('L');
+                            }
+                            else if (countOccupiedSeats(seatsIn, i, j) == 0)
+                            {
+                                lifeOut[i][j] = Convert.ToString('#');
+                            }
+                        }
+                            
+                    }
+                }
+                return lifeOut;
+            }
+            private static int countOccupiedSeats(string[][] seatsIn, int row, int column) {
+                int occupiedSeats = 0;
+                for (int i = row - 1; i <= row + 1; i++)
+                {
+                    if (i >= 0 & i != seatsIn.Length)
+                    {
+                        for (int j = column - 1; j <= column + 1; j++)
+                        {
+                            if(i != row | j != column)
+                            {
+                                if (j >= 0 & j != seatsIn[i].Length)
+                                {
+                                    if (seatsIn[i][j] == Convert.ToString('#')) { occupiedSeats++; }
+                                }
+                            }
+                        }
+                    }
+                }
+                return occupiedSeats;
             }
         }
     }
