@@ -55,46 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="day1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day10.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day3.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day4.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day5.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day6.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day7.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day8.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="day9.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,36 +63,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="day1.xaml.cs">
-      <DependentUpon>day1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day10.xaml.cs">
-      <DependentUpon>day10.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day2.xaml.cs">
-      <DependentUpon>day2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day3.xaml.cs">
-      <DependentUpon>day3.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day4.xaml.cs">
-      <DependentUpon>day4.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day5.xaml.cs">
-      <DependentUpon>day5.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day6.xaml.cs">
-      <DependentUpon>day6.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day7.xaml.cs">
-      <DependentUpon>day7.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day8.xaml.cs">
-      <DependentUpon>day8.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="day9.xaml.cs">
-      <DependentUpon>day9.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -636,18 +636,16 @@ namespace AdventOfCode2020
         }
         public struct day10
         {
-            static private decimal counter = 0;
             static public int countJolts(string joltStr)
             {
                 List<int> jolts= Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
+                jolts.Add(0);
                 jolts.Sort();
                 jolts.Add(jolts[jolts.Count - 1] + 3);
-                int jolt = 0;
                 int[] joltChanges = new int[3];
-                for (int i = 0; i < jolts.Count; i++)
+                for (int i = 1; i < jolts.Count; i++)
                 {
-                    joltChanges[jolts[i] - jolt - 1]++;
-                    jolt = jolts[i];
+                    joltChanges[jolts[i] - jolts[i -1] - 1]++;
                 }
                 return joltChanges[0] * joltChanges[2];
 
@@ -656,17 +654,55 @@ namespace AdventOfCode2020
             static public decimal checkJoltVarieties(string joltStr)
             {
                 List<int> joltList = Array.ConvertAll(Regex.Split(joltStr, @"\r\n"), int.Parse).ToList();
+                List<int> differences = new List<int>();
+                int counter = 1;
+                decimal output = 1;
                 joltList.Add(0);
                 joltList.Sort();
                 joltList.Add(joltList[joltList.Count - 1] + 3);
-                int[] jolts = new int[joltList.Count];
-                Array.Copy(joltList.ToArray(), jolts, joltList.Count);
-                return enumeratevarieties(jolts, 1);
+                for(int i = 1; i < joltList.Count; i++)
+                {
+                    differences.Add(joltList[i] - joltList[i - 1]);
+                }
+                for(int i = 1; i < differences.Count; i++)
+                {
+                    //if (counter == 3)
+                    //{
+                    //    //output += factorial(counter * differences[i - 1]);
+                    //    output = output * 2 ^ (counter - 1);
+                    //    counter = 2;
+                    //}
+                    //else if (counter == 2)
+                    //{
+                    //    //output += factorial(counter * differences[i - 1]);
+                    //    output = output * 2 ^ (counter - 1);
+
+                    //}
+                    if (counter > 3)
+                    {
+                        output = output * (Convert.ToInt32(Math.Pow(2,counter - 1)) - (counter - 3));
+                    }
+                    if (differences[i] == differences[i-1] & differences[i] == 1) { counter++; }
+                    else if (counter <= 3 & counter != 1){
+                        output = output * Convert.ToInt32(Math.Pow(2, counter - 1));
+                        counter = 1; }
+                    else { counter = 1; }
+                }
+                return output;
+            }
+            static private int factorial(int a) {
+                int sumOut = a;
+                for (int i = a-1; i != 0; i--)
+                {
+                    sumOut = sumOut * i;
+                }
+                return sumOut;
             }
             // note to self, you recorded the jumps so you know what can and can't be made, 1s are easy, 3s are impossible have a good morning ::)
+
+            // enumeratevarieties is an awful way of solving the problem and should not be used >:(
             static public decimal enumeratevarieties(int[] jolts, int enumerateFrom)
             {
-                counter++;
                 decimal joltOut = 1;
                 int[] newJolts = new int[jolts.Length - 1];
                 for (int i = 1; i < jolts.Length; i++)

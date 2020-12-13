@@ -8,26 +8,26 @@
         Title="MainWindow" Height="450" Width="427.4">
     <Grid>
         <TextBox x:Name="InputTxt" HorizontalAlignment="Left" Height="403" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True"/>
-        <TextBox x:Name="OutputTxt" HorizontalAlignment="Left" Height="403" Margin="135,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AcceptsReturn="True"/>
+        <TextBox x:Name="OutputTxt" HorizontalAlignment="Left" Height="403" Margin="135,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button Content="D1 P1" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p1Clk"/>
         <Button Content="D1 P2" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="75" Click="d1p2Clk"/>
         <Button Content="D2 P1" HorizontalAlignment="Left" Margin="260,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p1Clk"/>
         <Button Content="D3 P1" HorizontalAlignment="Left" Margin="260,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p1Clk"/>
-        <Button Content="D4 P1" HorizontalAlignment="Left" Margin="260,85,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D5 P1" HorizontalAlignment="Left" Margin="260,110,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D6 P1" HorizontalAlignment="Left" Margin="260,135,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D7 P1" HorizontalAlignment="Left" Margin="260,160,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D8 P1" HorizontalAlignment="Left" Margin="260,185,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D9 P1" HorizontalAlignment="Left" Margin="260,210,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D10 P1" HorizontalAlignment="Left" Margin="260,235,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D10 P2" HorizontalAlignment="Left" Margin="340,235,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D9 P2" HorizontalAlignment="Left" Margin="340,210,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D8 P2" HorizontalAlignment="Left" Margin="340,185,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D7 P2" HorizontalAlignment="Left" Margin="340,160,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D6 P2" HorizontalAlignment="Left" Margin="340,135,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D5 P2" HorizontalAlignment="Left" Margin="340,110,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D4 P2" HorizontalAlignment="Left" Margin="340,85,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="D3 P2" HorizontalAlignment="Left" Margin="340,60,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="D4 P1" HorizontalAlignment="Left" Margin="260,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p1Clk"/>
+        <Button Content="D5 P1" HorizontalAlignment="Left" Margin="260,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p1Clk"/>
+        <Button Content="D6 P1" HorizontalAlignment="Left" Margin="260,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p1Clk"/>
+        <Button Content="D7 P1" HorizontalAlignment="Left" Margin="260,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p1Clk"/>
+        <Button Content="D8 P1" HorizontalAlignment="Left" Margin="260,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p1Clk"/>
+        <Button Content="D9 P1" HorizontalAlignment="Left" Margin="260,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p1Clk"/>
+        <Button Content="D10 P1" HorizontalAlignment="Left" Margin="260,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p1Clk"/>
+        <Button Content="D10 P2" HorizontalAlignment="Left" Margin="340,235,0,0" VerticalAlignment="Top" Width="75" Click="d10p2Clk"/>
+        <Button Content="D9 P2" HorizontalAlignment="Left" Margin="340,210,0,0" VerticalAlignment="Top" Width="75" Click="d9p2Clk"/>
+        <Button Content="D8 P2" HorizontalAlignment="Left" Margin="340,185,0,0" VerticalAlignment="Top" Width="75" Click="d8p2Clk"/>
+        <Button Content="D7 P2" HorizontalAlignment="Left" Margin="340,160,0,0" VerticalAlignment="Top" Width="75" Click="d7p2Clk"/>
+        <Button Content="D6 P2" HorizontalAlignment="Left" Margin="340,135,0,0" VerticalAlignment="Top" Width="75" Click="d6p2Clk"/>
+        <Button Content="D5 P2" HorizontalAlignment="Left" Margin="340,110,0,0" VerticalAlignment="Top" Width="75" Click="d5p2Clk"/>
+        <Button Content="D4 P2" HorizontalAlignment="Left" Margin="340,85,0,0" VerticalAlignment="Top" Width="75" Click="d4p2Clk"/>
+        <Button Content="D3 P2" HorizontalAlignment="Left" Margin="340,60,0,0" VerticalAlignment="Top" Width="75" Click="d3p2Clk"/>
         <Button Content="D2 P2" HorizontalAlignment="Left" Margin="340,35,0,0" VerticalAlignment="Top" Width="75" Click="d2p2Clk"/>
     </Grid>
 </Window>
