@@ -116,6 +116,10 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day11.countSeats(InputTxt.Text));
         }
+        private void d11p2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day11.p2countSeats(InputTxt.Text));
+        }
 
         private void d12p1Clk(object sender, RoutedEventArgs e)
         {

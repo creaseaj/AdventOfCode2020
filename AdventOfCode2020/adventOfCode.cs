@@ -814,6 +814,94 @@ namespace AdventOfCode2020
                 }
                 return occupiedSeats;
             }
+
+            public static int p2countSeats(string seatsStr)
+            {
+                string[] seats1D = Regex.Split(seatsStr, @"\r\n");
+                string[][] oldLife = new string[seats1D.Length][];
+                for (int i = 0; i < seats1D.Length; i++)
+                {
+                    oldLife[i] = new string[seats1D.Length];
+                    for (int j = 0; j < seats1D[i].Length; j++)
+                    {
+                        oldLife[i][j] = Convert.ToString(seats1D[i][j]);
+                    }
+                }
+                string[][] newLife = new String[oldLife.Length][];
+                newLife = runP2Life(oldLife);
+                while (!compareArrays(newLife, oldLife))
+                {
+                    newLife = runP2Life(oldLife);
+                    oldLife = runP2Life(newLife);
+                }
+
+                return countFreeSeats(newLife);
+            }
+            private static string[][] runP2Life(string[][] seatsIn)
+            {
+                string[][] lifeOut = new string[seatsIn.Length][];
+                for (int i = 0; i < seatsIn.Length; i++)
+                {
+                    lifeOut[i] = new string[seatsIn.Length];
+                    Array.Copy(seatsIn[i], lifeOut[i], seatsIn[i].Length);
+                    for (int j = 0; j < seatsIn[i].Length; j++)
+                    {
+                        if (seatsIn[i][j] == Convert.ToString('#') | seatsIn[i][j] == Convert.ToString('L'))
+                        {
+                            int occSeats = p2CountOccupiedSeat(seatsIn, i, j);
+                            if (occSeats>= 5) { 
+                                lifeOut[i][j] = Convert.ToString('L');
+                            }
+                            else if (occSeats == 0)
+                            {
+                                lifeOut[i][j] = Convert.ToString('#');
+                            }
+                        }
+                    }
+                }
+                return lifeOut;
+            }
+            private static int p2CountOccupiedSeat(string[][] seatsIn, int row, int column)
+            {
+                int occupiedSeats = 0;
+                for (int i = row - 1; i <= row + 1; i++)
+                {
+                    for (int j = column - 1; j <= column + 1; j++)
+                    {
+                        if (i != row | j != column)
+                        {
+                            if (checkOutOfBounds(seatsIn, i, j))
+                            {
+                                char seatSeen = Convert.ToChar(seatsIn[i][j]);
+                                int k = 0, l = 0;
+                                while (seatSeen == '.')
+                                {
+                                    k += row - i;
+                                    l += column - j;
+                                    if (!checkOutOfBounds(seatsIn, i, j))
+                                    {
+                                        seatSeen = Convert.ToChar(seatsIn[i + k][j + l]);
+                                    }
+                                    else { break; }
+                                    
+                                }
+                                if (seatSeen == '#') { occupiedSeats++; }
+                            }
+                        }
+                    }
+                }
+                return occupiedSeats;
+            }
+            private static bool checkOutOfBounds(string[][] seatsIn, int row, int column)
+            {
+                if(row < seatsIn.Length & row >= 0) {
+                    if(column < seatsIn[0].Length & column >= 0)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
         public struct day12
         {
@@ -824,40 +912,41 @@ namespace AdventOfCode2020
                 string[] Instructions = Regex.Split(codeIn, @"\r\n");
                 for (int i = 0; i < Instructions.Length; i++)
                 {
-                    switch (Convert.ToString(Instructions[i][0]))
+                    string currentIn = Instructions[i];
+                    switch (Convert.ToString(currentIn[0]))
                     {
                         case ("N"):
-                            v += Convert.ToInt32(Instructions[i].Substring(1));
+                            v += Convert.ToInt32(currentIn.Substring(1));
                             break;
                         case ("E"):
-                            h += Convert.ToInt32(Instructions[i].Substring(1));
+                            h += Convert.ToInt32(currentIn.Substring(1));
                             break;
                         case ("S"):
-                            h -= Convert.ToInt32(Instructions[i].Substring(1));
+                            v -= Convert.ToInt32(currentIn.Substring(1));
                             break;
                         case ("W"):
-                            v -= Convert.ToInt32(Instructions[i].Substring(1));
+                            h -= Convert.ToInt32(currentIn.Substring(1));
                             break;
                         case ("R"):
-                            facing += Convert.ToInt32(Instructions[i].Substring(1)) / 90;
+                            facing += Convert.ToInt32(currentIn.Substring(1)) / 90;
                             break;
                         case ("L"):
-                            facing -= Convert.ToInt32(Instructions[i].Substring(1)) / 90;
+                            facing -= Convert.ToInt32(currentIn.Substring(1)) / 90;
                             break;
                         case ("F"):
                             switch (facing % 4)
                             {
                                 case (0):
-                                    v += Convert.ToInt32(Instructions[i].Substring(1));
+                                    v += Convert.ToInt32(currentIn.Substring(1));
                                     break;
                                 case (1):
-                                    h += Convert.ToInt32(Instructions[i].Substring(1));
+                                    h += Convert.ToInt32(currentIn.Substring(1));
                                     break;
                                 case (2):
-                                    v -= Convert.ToInt32(Instructions[i].Substring(1));
+                                    v -= Convert.ToInt32(currentIn.Substring(1));
                                     break;
                                 case (3):
-                                    h -= Convert.ToInt32(Instructions[i].Substring(1));
+                                    h -= Convert.ToInt32(currentIn.Substring(1));
                                     break;
 
                             }
