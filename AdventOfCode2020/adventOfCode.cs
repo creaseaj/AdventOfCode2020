@@ -821,7 +821,7 @@ namespace AdventOfCode2020
                 string[][] oldLife = new string[seats1D.Length][];
                 for (int i = 0; i < seats1D.Length; i++)
                 {
-                    oldLife[i] = new string[seats1D.Length];
+                    oldLife[i] = new string[seats1D[0].Length];
                     for (int j = 0; j < seats1D[i].Length; j++)
                     {
                         oldLife[i][j] = Convert.ToString(seats1D[i][j]);
@@ -842,8 +842,8 @@ namespace AdventOfCode2020
                 string[][] lifeOut = new string[seatsIn.Length][];
                 for (int i = 0; i < seatsIn.Length; i++)
                 {
-                    lifeOut[i] = new string[seatsIn.Length];
-                    Array.Copy(seatsIn[i], lifeOut[i], seatsIn[i].Length);
+                    lifeOut[i] = new string[seatsIn[0].Length];
+                    Array.Copy(seatsIn[i], lifeOut[i], seatsIn[0].Length);
                     for (int j = 0; j < seatsIn[i].Length; j++)
                     {
                         if (seatsIn[i][j] == Convert.ToString('#') | seatsIn[i][j] == Convert.ToString('L'))
@@ -876,9 +876,9 @@ namespace AdventOfCode2020
                                 int k = 0, l = 0;
                                 while (seatSeen == '.')
                                 {
-                                    k += row - i;
-                                    l += column - j;
-                                    if (!checkOutOfBounds(seatsIn, i, j))
+                                    k += i - row;
+                                    l += j - column;
+                                    if (checkOutOfBounds(seatsIn, i + k, j + l))
                                     {
                                         seatSeen = Convert.ToChar(seatsIn[i + k][j + l]);
                                     }
