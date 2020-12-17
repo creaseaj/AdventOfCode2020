@@ -1027,26 +1027,105 @@ namespace AdventOfCode2020
             {
                 return busID - (time % busID);
             }
-            static public int p2CheckConsecutiveBusses(string busStr)
+            static public decimal p2CheckConsecutiveBusses(string busStr)
             {
                 string[] busTimes = Regex.Split(busStr, @",");
-                int time = 0;
                 bool timeFound = true;
-                for (; ; time += Convert.ToInt32(busTimes[0]))
+                for (decimal time = 0;time < decimal.MaxValue - Convert.ToInt32(busTimes[0]) ; time += Convert.ToInt32(busTimes[0]))
                 {
                     timeFound = true;
                     for (int i = 1; i < busTimes.Length; i++)
                     {
-                       if(busTimes[i] != Convert.ToString("x"))
+                        if (busTimes[i] != Convert.ToString("x"))
                         {
-                            if (time + i  % Convert.ToInt32(busTimes[i]) != 0) { timeFound = false; }
+                            if ((time + i) % Convert.ToDecimal(busTimes[i]) != 0) { timeFound = false; break; ; }
                         }
                     }
                     if(timeFound) { return time; }
                 }
+                return int.MaxValue;
             }
         }
-        public struct day14 { }
+        public struct day14 {
+            static public decimal readMasks(string maskIn)
+            {
+                string[] instructions = Regex.Split(maskIn, @"\r\n");
+                List<int> bitMask = new List<int>();
+                decimal output = 0;
+                Dictionary<int, decimal> memory = new Dictionary<int, decimal>();
+                for (int i = 0; i < instructions.Length; i++)
+                {
+                    string[] instruction = Regex.Split(instructions[i], @" = ");
+                    if (instruction[0] == "mask") // mask being written
+                    {
+                        bitMask = new List<int>();
+                        for (int j = 0; j < instruction[1].Length; j++)
+                        {
+                            if (instruction[1][j] == 'X')
+                            {
+                                bitMask.Add(-1);
+                            }
+                            else
+                            {
+                                bitMask.Add(Convert.ToInt32(Convert.ToString(instruction[1][j])));
+                            }
+                        }
+                    }
+                    // memory being written
+                    else
+                    {
+                        string[] memWrite = toBinary(instruction[1],bitMask.Count) ;
+                        for (int j = 0; j < bitMask.Count; j++)
+                        { 
+                            if (bitMask[j] >= 0)
+                            {
+                                memWrite[j] = Convert.ToString(bitMask[j]);
+                            }
+                        }
+                        Regex regex = new Regex(@"[\d]+");
+                        //Match m = regex.Match(instruction[0]);
+                        int memLoc = Convert.ToInt32(regex.Match(instruction[0]).Groups[0].Value);
+                        decimal memData = binaryToDecimal(memWrite) ;
+                        memory[memLoc] = memData;
+                    }
+                }
+                Dictionary<int,decimal>.ValueCollection values = memory.Values;
+                foreach (decimal val in values)
+                {
+                    output += val;
+                }
+                return output; ;
+            }
+            static private decimal binaryToDecimal(string[] binaryIn)
+            {
+                decimal output = 0;
+                for(int i = 0; i < binaryIn.Length; i++)
+                {
+                    if (Convert.ToInt32(binaryIn[i]) == 1){
+                        output += Convert.ToDecimal(Math.Pow(2,binaryIn.Length - i - 1));
+                    }
+                }
+                return output;
+            }
+            static private string[] toBinary(string strIn, int length)
+            {
+                int intIn = Convert.ToInt32(strIn);
+                string binary = Convert.ToString(intIn, 2);
+                string[] output = new string[length];
+                for(int i = 0; i < length; i++)
+                {
+                    if (i < length - binary.Length)
+                    {
+                        output[i] = "0";
+                    }
+                    else
+                    {
+                        output[i] = Convert.ToString(binary[i - length + binary.Length]);
+                    }
+                }
+                return output;
+            }
+        }
         public struct day15 { }
         public struct day16 { }
         public struct day17 { }

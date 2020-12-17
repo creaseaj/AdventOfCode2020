@@ -140,5 +140,10 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day13.p2CheckConsecutiveBusses(InputTxt.Text));
         }
+
+        private void d14P1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day14.readMasks(InputTxt.Text));
+        }
     }
 }
