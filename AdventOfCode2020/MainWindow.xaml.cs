@@ -128,7 +128,7 @@ namespace AdventOfCode2020
 
         private void d12p2Clk(object sender, RoutedEventArgs e)
         {
-            OutputTxt.Text = Convert.ToString(adventOfCode.day11.countSeats(InputTxt.Text));
+            OutputTxt.Text = Convert.ToString(adventOfCode.day12.getP2ManhattanDistance(InputTxt.Text));
         }
 
         private void d13P1Clk(object sender, RoutedEventArgs e)
@@ -138,7 +138,7 @@ namespace AdventOfCode2020
 
         private void d13p2Clk(object sender, RoutedEventArgs e)
         {
-
+            OutputTxt.Text = Convert.ToString(adventOfCode.day13.p2CheckConsecutiveBusses(InputTxt.Text));
         }
     }
 }

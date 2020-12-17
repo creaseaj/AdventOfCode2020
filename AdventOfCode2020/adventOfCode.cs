@@ -957,6 +957,55 @@ namespace AdventOfCode2020
                 }
                 return Math.Abs(v) + Math.Abs(h);
             }
+            static public int getP2ManhattanDistance(string codeIn)
+            {
+                int facing = 0;
+                int[] shipCord = { 0 , 0 }, waypCord = { 10, 1 }, oldWay = new int[2];
+                // [0] is x, [1] is y
+                // facing 0 is north, east is 1 etc.
+                string[] Instructions = Regex.Split(codeIn, @"\r\n|\n");
+                for (int i = 0; i < Instructions.Length; i++)
+                {
+                    string currentIn = Instructions[i];
+                    switch (Convert.ToString(currentIn[0]))
+                    {
+                        case ("N"):
+                            waypCord[1] += Convert.ToInt32(currentIn.Substring(1));
+                            break;
+                        case ("E"):
+                            waypCord[0] += Convert.ToInt32(currentIn.Substring(1));
+                            break;
+                        case ("S"):
+                            waypCord[1] -= Convert.ToInt32(currentIn.Substring(1));
+                            break;
+                        case ("W"):
+                            waypCord[0] -= Convert.ToInt32(currentIn.Substring(1));
+                            break;
+                        case ("R"):
+                            for (int j = 0; j < Convert.ToInt32(currentIn.Substring(1)) / 90; j++)
+                            {
+                                Array.Copy(waypCord, oldWay, 2);
+                                waypCord[0] = oldWay[1];
+                                waypCord[1] = -oldWay[0];
+                            }
+                            break;
+                        case ("L"):
+                            for (int j = 0; j < 4 - Convert.ToInt32(currentIn.Substring(1)) / 90; j++)
+                            {
+                                Array.Copy(waypCord, oldWay, 2);
+                                waypCord[0] = oldWay[1];
+                                waypCord[1] = -oldWay[0];
+                            }
+                            break;
+                        case ("F"):
+                            facing = 0;
+                            shipCord[1] += waypCord[1] * Convert.ToInt32(currentIn.Substring(1));
+                            shipCord[0] += waypCord[0] * Convert.ToInt32(currentIn.Substring(1));
+                            break;
+                    }
+                }
+                return Math.Abs(shipCord[0]) + Math.Abs(shipCord[1]);
+            }
         }
         public struct day13
         {
@@ -976,7 +1025,25 @@ namespace AdventOfCode2020
 
             static private int waitTime(int busID, int time)
             {
-                return busID - time % busID;
+                return busID - (time % busID);
+            }
+            static public int p2CheckConsecutiveBusses(string busStr)
+            {
+                string[] busTimes = Regex.Split(busStr, @",");
+                int time = 0;
+                bool timeFound = true;
+                for (; ; time += Convert.ToInt32(busTimes[0]))
+                {
+                    timeFound = true;
+                    for (int i = 1; i < busTimes.Length; i++)
+                    {
+                       if(busTimes[i] != Convert.ToString("x"))
+                        {
+                            if (time + i  % Convert.ToInt32(busTimes[i]) != 0) { timeFound = false; }
+                        }
+                    }
+                    if(timeFound) { return time; }
+                }
             }
         }
         public struct day14 { }
