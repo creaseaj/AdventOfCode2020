@@ -1031,19 +1031,46 @@ namespace AdventOfCode2020
             {
                 string[] busTimes = Regex.Split(busStr, @",");
                 bool timeFound = true;
-                for (decimal time = 0;time < decimal.MaxValue - Convert.ToInt32(busTimes[0]) ; time += Convert.ToInt32(busTimes[0]))
+                List<int[]> timeDict = new List<int[]>();
+                decimal[] decBusTimes = new decimal[busTimes.Length];
+                decimal[] largestTime = { Convert.ToDecimal(busTimes[0]), 1 }; // needs to store size and it's index
+                // convert busTimes into decimals so there's less converting in the loop
+                for(int i = 0; i < busTimes.Length; i++)
+                {
+                    if(busTimes[i] != "x")
+                    {
+                        decBusTimes[i] = Convert.ToDecimal(busTimes[i]);
+                    }
+                    else
+                    {
+                        decBusTimes[i] = 1;
+                    }
+                }
+                for (decimal time = Convert.ToDecimal(busTimes[0]); time < decimal.MaxValue - decBusTimes[0]; time += largestTime[0])
                 {
                     timeFound = true;
-                    for (int i = 1; i < busTimes.Length; i++)
+                    for (int i = Convert.ToInt32(largestTime[1]); i < decBusTimes.Length; i++)
                     {
-                        if (busTimes[i] != Convert.ToString("x"))
-                        {
-                            if ((time + i) % Convert.ToDecimal(busTimes[i]) != 0) { timeFound = false; break; ; }
+                        decimal waitTime = (time + i) % decBusTimes[i];
+                        if (waitTime != 0) { timeFound = false; break; }
+                        else if (i >= largestTime[1]) { 
+                            largestTime[0] = sumOf(decBusTimes,i + 1);
+                            largestTime[1] = i;
                         }
+                        
                     }
-                    if(timeFound) { return time; }
+                    if (timeFound) { return time; }
                 }
-                return int.MaxValue;
+                return 0;
+            }
+            private static decimal sumOf(decimal[] timesIn, int length)
+            {
+                decimal sumOut = timesIn[0];
+                for(int i  = 1; i < length; i++)
+                {
+                    sumOut = sumOut * timesIn[i];
+                }
+                return sumOut;
             }
         }
         public struct day14 {
