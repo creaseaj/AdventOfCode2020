@@ -150,5 +150,20 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day14.p2readMasks(InputTxt.Text));
         }
+
+        private void d15P1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day15.playNumberGame(InputTxt.Text,2020));
+        }
+
+        private void d15P2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day15.playNumberGame(InputTxt.Text,30000000));
+        }
+
+        private void d16P1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day16.readTickets(InputTxt.Text));
+        }
     }
 }

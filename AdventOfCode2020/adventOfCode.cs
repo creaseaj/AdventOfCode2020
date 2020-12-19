@@ -1246,8 +1246,225 @@ namespace AdventOfCode2020
 
             }
         }
-        public struct day15 { }
-        public struct day16 { }
+        public struct day15 {
+            public static int playNumberGame(string numbersIn, int length)
+            {
+                // This code is very messy and can be made a lot more elegant.
+                // If this was to happen, the List<int> inside the dictionary would be made into an int[2] for the last two indexes of the number
+                // This means it won't be storing 30 million values inside a dicitonary when it only needs a fraction of thatr
+                string[] instruction = Regex.Split(numbersIn, @",");
+                Dictionary<int, List<int>> numberList = new Dictionary<int, List<int>>(); 
+                for(int i = 0; i < instruction.Length; i++)
+                {
+                    numberList[Convert.ToInt32(instruction[i])] = new List<int>();
+                    numberList[Convert.ToInt32(instruction[i])].Add(i);
+                }
+                int lastNum = Convert.ToInt32(instruction[instruction.Length - 1]);
+                for (int i = numberList.Count; i < length; i++)
+                {
+                    if(numberList[lastNum].Count <= 1)
+                    {
+                        if (!numberList.ContainsKey(0))
+                        {
+                            numberList[0] = new List<int>();
+                        }
+                        numberList[0].Add(i);
+                        lastNum = 0;
+                    }
+                    else
+                    {
+                        if (!numberList.ContainsKey(lastNum)) 
+                        {
+                            numberList[lastNum] = new List<int>();
+                            lastNum = 0;
+                        }
+                        else
+                        {
+                            lastNum = (i - numberList[lastNum][numberList[lastNum].Count - 2]) - 1;
+                            
+                        }
+                        if (!numberList.ContainsKey(lastNum))
+                        {
+                            numberList[lastNum] = new List<int>();
+                        }
+                        numberList[lastNum].Add(i);
+                    }
+                }
+                return lastNum;
+            }
+            private static int lastSpoke(List<int> gameMemory)
+            {
+                // This was used to search through the whole array but it was too slow for part 2 and has now been removed
+                int numberToFind = gameMemory[gameMemory.Count - 1], length = 0;
+                for (int i = 2; i < gameMemory.Count + 1; i++)
+                {
+                    if(gameMemory[gameMemory.Count - i] == numberToFind)
+                    {
+                        length = i - 1;
+                        break;
+                    }
+                }
+                return length;
+            }
+
+        }
+        public struct day16 {
+            public static int readTickets (string listIn)
+            {
+                string[] instruction = Regex.Split(listIn, @"\r\n\r\n");
+                List<int[]> ranges = getRanges(instruction[0]);
+                MatchCollection matches = Regex.Matches(instruction[2], @"[\d]+");
+                bool inRange = false;
+                //int[] numbers = Array.ConvertAll(Regex.Split(instruction[2], @","),int.Parse);
+
+                int numOut = checkMatches(matches,ranges);
+                return numOut;
+            }
+            private static int checkMatches(MatchCollection matches, List<int[]> ranges)
+            {
+                bool inRange = false;
+                int numOut = 0;
+                foreach (Match match in matches)
+                {
+                    inRange = false;
+                    for (int i = 0; i < ranges.Count; i++)
+                    {
+                        if (isBetween(Convert.ToInt32(match.Value), ranges[i]))
+                        {
+                            inRange = true;
+                        }
+                    }
+                    if (!inRange)
+                    {
+                        numOut += Convert.ToInt32(match.Value);
+                    }
+                }
+                return numOut;
+            }
+            private static List<int[]> getRanges (string input)
+            {
+                List<int[]> ranges = new List<int[]>();
+                MatchCollection matches = Regex.Matches(input, @"[\d]+-[\d]+");
+
+                foreach (Match match in matches)
+                {
+                    ranges.Add(Array.ConvertAll(Regex.Split(match.Value, @"-"), int.Parse));
+                }
+                return simplifyRanges(ranges);
+
+            }
+            private static List<int[]> simplifyRanges(List<int[]> rangeIn)
+            {
+                int largestNum = 0, bottomRange = 0,topRange = 0;
+                List<int[]> rangeOut = new List<int[]>();
+                for (int i = 0; i < rangeIn.Count; i++)
+                {
+                    if (rangeIn[i][1] > largestNum)
+                    {
+                        largestNum = rangeIn[i][1];
+                    }
+                }
+                int[] range = new int[largestNum] ;
+                for(int i = 0; i < rangeIn.Count; i++)
+                {
+                    for(int j = rangeIn[i][0]; j <= rangeIn[i][1]; j++)
+                    {
+                        range[j - 1] = 1;
+                    }
+                }
+                
+                for (int i = 0; i < range.Length; i++)
+                {
+                    if(range[i] == 1)
+                    {
+                        bottomRange = i;
+                        for(int j = i + 1; j < range.Length; j++)
+                        {
+                            if(range[j] == 0)
+                            {
+                                topRange = j - 1;
+                                break;
+                            }
+                            else if (j == range.Length - 1)
+                            {
+                                topRange = j;
+                            }
+                        }
+                        
+                        int[] tmpRange = { bottomRange + 1, topRange + 1 };
+                        rangeOut.Add(tmpRange);
+                        i = topRange;
+                    }
+                }
+
+                return rangeOut;
+
+                //List<int[]> rangeOut = new List<int[]>();
+                ////rangeIn.Sort();
+                //bool noOverlaps = true, noOverlapsAnywhere = true;
+                //for (int i = 0; i < rangeIn.Count; i++)
+                //{
+                //    for (int j = i + 1; j < rangeIn.Count; j++)
+                //    {
+                   
+                //        {=
+                //            int[] newRange = rangesOverlap(rangeIn[i], rangeIn[j]);
+                //            if (newRange != null)
+                //            {
+                //                rangeOut.Add(newRange);
+                //            }
+                        
+                       
+                //    }
+                //}
+                //if (rangeOut[rangeOut.Count - 1][1] != rangeIn[rangeIn.Count - 1][1])
+                //    {
+                //        rangeOut.Add(rangeIn[rangeIn.Count - 1]);
+                //    }
+                //if (noOverlapsAnywhere)
+                //{
+                //    return rangeOut;
+                //}
+                //return simplifyRanges(rangeOut);
+            }
+
+
+            private static int[] rangesOverlap(int[] range1, int[] range2)
+            {
+                int[] rangeOut = null;
+                if (isBetween(range1[0], range2))
+                {
+                        int[] inputArray = { range2[0], range1[1] };
+                         rangeOut = inputArray;
+                }
+                if (isBetween(range1[1], range2))
+                {
+                    int[] inputArray = { range1[0], range2[1] };
+                    rangeOut = inputArray;
+                }
+                return rangeOut;
+            }
+
+
+            private static bool isEncased(int[] small, int[] large)
+            {
+                if(small[0] >= large[1] & small[1] <= large[1])
+                {
+                    return true;
+                }
+                return false;
+            }
+
+
+            private static bool isBetween(int number, int[] range)
+            {
+                if(number >= range[0] & number <= range[1])
+                {
+                    return true;
+                }
+                else { return false; }
+            }
+        }
         public struct day17 { }
         public struct day18 { }
         public struct day19 { }
