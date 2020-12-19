@@ -40,7 +40,7 @@
         <Button Content="D13 P1" HorizontalAlignment="Left" Margin="187.2,310,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
         <Button Content="D13 P2" HorizontalAlignment="Left" Margin="267.2,310,0,0" VerticalAlignment="Top" Width="75" Click="d13p2Clk" Grid.Column="1"/>
         <Button Content="D14 P1" HorizontalAlignment="Left" Margin="187.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d14P1Clk" Grid.Column="1"/>
-        <Button Content="D14 P2" HorizontalAlignment="Left" Margin="267.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D14 P2" HorizontalAlignment="Left" Margin="267.2,335,0,0" VerticalAlignment="Top" Width="75" Click="d14P2Clk" Grid.Column="1"/>
         <Button Content="D15 P1" HorizontalAlignment="Left" Margin="187.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
         <Button Content="D15 P2" HorizontalAlignment="Left" Margin="267.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
         <Button Content="D16 P1" HorizontalAlignment="Left" Margin="187.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>

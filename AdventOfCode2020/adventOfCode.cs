@@ -1152,6 +1152,99 @@ namespace AdventOfCode2020
                 }
                 return output;
             }
+            static public decimal p2readMasks(string instructionsStr)
+            {
+                string[] instructions = Regex.Split(instructionsStr, @"\r\n");
+                List<int> bitMask = new List<int>();
+                decimal output = 0;
+                Dictionary<decimal, decimal> memory = new Dictionary<decimal, decimal>();
+                for (int i = 0; i < instructions.Length; i++)
+                {
+                    string[] instruction = Regex.Split(instructions[i], @" = ");
+                    if (instruction[0] == "mask") // mask being written
+                    {
+                        bitMask = new List<int>();
+                        for (int j = 0; j < instruction[1].Length; j++)
+                        {
+                            if (instruction[1][j] == 'X')
+                            {
+                                bitMask.Add(-1);
+                            }
+                            else
+                            {
+                                bitMask.Add(Convert.ToInt32(Convert.ToString(instruction[1][j])));
+                            }
+                        }
+                    }
+                    // memory being written
+                    else
+                    {
+                        Regex regex = new Regex(@"[\d]+");
+                        decimal memLoc = Convert.ToDecimal(regex.Match(instruction[0]).Groups[0].Value);
+                        decimal memWrite = Convert.ToDecimal(instruction[1]);
+                        string[] address = toBinary(Convert.ToString(memLoc), bitMask.Count);
+                        for (int j = 0; j < bitMask.Count; j++)
+                        {
+                            switch (bitMask[j])
+                            {
+                                case (1):
+                                    address[j] = "1";
+                                    break;
+                                case (-1):
+                                    address[j] = "-1";
+                                    break;
+                            }
+                        }
+                        //Match m = regex.Match(instruction[0]);
+                        memory = writeAddresses(memory, address, memWrite);
+                        //decimal memData = binaryToDecimal(memWrite);
+                        //memory[memLoc] = memData;
+                    }
+                }
+                Dictionary<decimal, decimal>.ValueCollection values = memory.Values;
+                foreach (decimal val in values)
+                {
+                    output += val;
+                }
+                return output; ;
+            }
+            private static Dictionary<decimal,decimal> writeAddresses(Dictionary<decimal,decimal> memory, string[] loc, decimal toWrite)
+            {
+                // gonna get all addresses
+                List<decimal> addresses = new List<decimal>();
+                addresses = findAddresses(loc);
+                for(int i = 0; i < addresses.Count; i++)
+                {
+                    memory[addresses[i]] = toWrite;
+                }
+                return memory;
+            }
+            private static List<decimal> findAddresses(string[] loc)
+            {
+                List<decimal> addresses = new List<decimal>();
+                bool containsNeg = false ;
+                string[] temp = new string[loc.Length];
+                for (int i = 0; i < loc.Length; i++)
+                {
+                    if (loc[i] == "-1")
+                    {
+                        for(int j = 0; j < 2; j++)
+                        {
+                            Array.Copy(loc, temp, loc.Length);
+                            temp[i] = Convert.ToString(j);
+                            addresses.AddRange(findAddresses(temp));
+                        }
+                        containsNeg = true;
+                        break;
+                    }
+                }
+                if (containsNeg == false)
+                {
+                    addresses.Add(binaryToDecimal(loc));
+                }
+                return addresses;
+
+            }
         }
         public struct day15 { }
         public struct day16 { }

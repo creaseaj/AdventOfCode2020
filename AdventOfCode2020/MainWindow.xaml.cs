@@ -145,5 +145,10 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day14.readMasks(InputTxt.Text));
         }
+
+        private void d14P2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day14.p2readMasks(InputTxt.Text));
+        }
     }
 }
