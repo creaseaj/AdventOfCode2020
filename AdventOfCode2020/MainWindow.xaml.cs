@@ -165,5 +165,25 @@ namespace AdventOfCode2020
         {
             OutputTxt.Text = Convert.ToString(adventOfCode.day16.readTickets(InputTxt.Text));
         }
+
+        private void d16P2Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day16.p2ReadTickets(InputTxt.Text));
+        }
+
+        private void d17P1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day17.conwayCuber(InputTxt.Text));
+        }
+
+        private void d17P2(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day17.conway4dCuber(InputTxt.Text));
+        }
+
+        private void d18P1Clk(object sender, RoutedEventArgs e)
+        {
+            OutputTxt.Text = Convert.ToString(adventOfCode.day18.part1(InputTxt.Text));
+        }
     }
 }

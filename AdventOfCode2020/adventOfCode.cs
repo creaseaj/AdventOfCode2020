@@ -1309,20 +1309,104 @@ namespace AdventOfCode2020
 
         }
         public struct day16 {
+            // Day 16 is currently unfinished and needs a lot more work
             public static int readTickets (string listIn)
             {
                 string[] instruction = Regex.Split(listIn, @"\r\n\r\n");
                 List<int[]> ranges = getRanges(instruction[0]);
                 MatchCollection matches = Regex.Matches(instruction[2], @"[\d]+");
-                bool inRange = false;
-                //int[] numbers = Array.ConvertAll(Regex.Split(instruction[2], @","),int.Parse);
-
                 int numOut = checkMatches(matches,ranges);
                 return numOut;
             }
+            public static int p2ReadTickets(string listIn)
+            {
+                string[] instruction = Regex.Split(listIn, @"\r\n\r\n");
+                List<int[]> ranges = getRanges(instruction[0]);
+                string[] tickets = Regex.Split(instruction[2], @"\r\n");
+                List<int[]> validTickets = new List<int[]>();
+                for(int i = 1; i < tickets.Length; i++)
+                {
+                    int[] ticket = Array.ConvertAll(Regex.Split(tickets[i], @","), int.Parse);
+                    if (checkTicket(ticket, ranges))
+                    {
+                        validTickets.Add(ticket);
+                    }
+                }
+                List<int[]> ticketRanges = getRangesOfTickets(validTickets);
+                string strOut = findTicketsFields(instruction[0], ticketRanges);
+                return 0;
+            }
+            private static string findTicketsFields(string instruction, List<int[]> ticketRanges)
+            {
+                string[] fields = Regex.Split(instruction, @"\r\n");
+                bool[,] ticketFits = new bool[ticketRanges.Count, ticketRanges.Count]; // i is each ticket field, j is the ticket ranges
+                //List<int> range = new List<int>();
+                int[] range;
+                int[] newRange = new int[2];
+                for(int i = 0; i < fields.Length; i++)
+                {
+                    MatchCollection matches = Regex.Matches(fields[i], @"[\d]+-[\d]+ or [\d]+-[\d]+");
+                    foreach (Match match in matches)
+                    {
+                        range = (Array.ConvertAll(Regex.Split(match.Value, @"-| or "), int.Parse));
+                        newRange[0] = range[0];
+                        newRange[1] = range[3];
+                    }
+                    for(int j = 0; j < ticketRanges.Count; j++)
+                    {
+                        if (isEncased(ticketRanges[j], newRange))
+                        {
+                            ticketFits[i, j] = true;
+                        }
+                        else { ticketFits[i, j] = false; }
+                    }
+                }
+                return "ha";
+            }
+            private static List<int[]> getRangesOfTickets(List<int[]> tickets)
+            {
+                List<int[]> ranges= new List<int[]>();
+                for(int i = 0; i < tickets.Count; i++)
+                {
+                    int[] tempIntAr = { tickets[i][0], tickets[i][0] };
+                    ranges.Add(tempIntAr);
+                    for(int j = 0; j < tickets[i].Length; j++)
+                    {
+                       if(tickets[i][j] <= ranges[i][0])
+                        {
+                            ranges[i][0] = tickets[i][j];
+                        }
+                       else if (tickets[i][j] >= ranges[i][1])
+                        {
+                            ranges[i][1] = tickets[i][j];
+                        }
+                    }
+                }
+                return ranges;
+            }
+            private static bool checkTicket(int[] ticket, List<int[]> ranges)
+            {
+                bool AllValid = true, inRange;
+                for(int i = 0; i < ticket.Length; i++)
+                {
+                    inRange = false;
+                    for (int j = 0; j < ranges.Count; j++)
+                    {
+                        if (isBetween(ticket[i], ranges[j]))
+                        {
+                            inRange = true;
+                        }
+                    }
+                    if (!inRange)
+                    {
+                        AllValid = false;
+                    }
+                }
+                return AllValid;
+            }
             private static int checkMatches(MatchCollection matches, List<int[]> ranges)
             {
-                bool inRange = false;
+                bool inRange;
                 int numOut = 0;
                 foreach (Match match in matches)
                 {
@@ -1364,12 +1448,12 @@ namespace AdventOfCode2020
                         largestNum = rangeIn[i][1];
                     }
                 }
-                int[] range = new int[largestNum] ;
+                int[] range = new int[largestNum + 1] ;
                 for(int i = 0; i < rangeIn.Count; i++)
                 {
                     for(int j = rangeIn[i][0]; j <= rangeIn[i][1]; j++)
                     {
-                        range[j - 1] = 1;
+                        range[j] = 1;
                     }
                 }
                 
@@ -1465,8 +1549,354 @@ namespace AdventOfCode2020
                 else { return false; }
             }
         }
-        public struct day17 { }
-        public struct day18 { }
+        public struct day17 {
+            public static int conway4dCuber (string input)
+            {
+                string[] cubesIn = Regex.Split(input, @"\r\n");
+                int size = cubesIn.Length;
+                bool[,,,] conway = new bool[size, size, size,size];
+                for (int i = 0; i < cubesIn.Length; i++)
+                {
+                    for (int j = 0; j < cubesIn[i].Length; j++)
+                    {
+                        conway[size/2,size / 2, i, j] = cubesIn[i][j] == '#';
+                    }
+                }
+                for(int i = 0; i < 6; i++)
+                {
+                    conway = run4dConway(conway);
+                }
+                return count4dActive(conway);
+            }
+            private static bool[,,,] run4dConway(bool[,,,] conwayIn)
+            {
+                conwayIn = expand4d(conwayIn);
+                int size = conwayIn.GetLength(0), neighbours;
+                bool[,,,] conwayOut = new bool[size, size, size, size];
+                Array.Copy(conwayIn, conwayOut, size);
+                for (int h = 0; h < size; h++)
+                {
+                    for (int i = 0; i < size; i++)
+                    {
+                        for (int j = 0; j < size; j++)
+                        {
+                            for (int k = 0; k < size; k++)
+                            {
+                                neighbours = check4dNeighbours(conwayIn,h, i, j, k);
+                                if (conwayIn[h,i, j, k] & neighbours != 2 & neighbours != 3)
+                                {
+                                    conwayOut[h,i, j, k] = false;
+                                }
+                                else if (conwayIn[h,i, j, k]) { conwayOut[h,i, j, k] = true; }
+                                else if (!conwayIn[h,i, j, k] & neighbours == 3)
+                                {
+                                    conwayOut[h,i, j, k] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return conwayOut;
+            }
+            private static int count4dActive(bool[,,,] conwayIn) 
+            {
+                int size = conwayIn.GetLength(0) - 1, sumOut = 0;
+                for (int h = 0; h <= size; h++)
+                {
+                    for (int i = 0; i <= size; i++)
+                    {
+                        for (int j = 0; j <= size; j++)
+                        {
+                            for (int k = 0; k <= size; k++)
+                            {
+                                if (conwayIn[h,i, j, k])
+                                {
+                                    sumOut++;
+                                }
+                            }
+                        }
+                    }
+                }
+                return sumOut;
+            }
+            private static int check4dNeighbours(bool[,,,] conwayIn, int w, int x, int y, int z)
+            {
+                int neighbours = 0;
+                int size = conwayIn.GetLength(0) - 1;
+                int[] bottomVals = {w - 1, x - 1, y - 1, z - 1 };
+                int[] topVals = {w + 1, x + 1, y + 1, z + 1 };
+                for (int h = bottomVals[0]; h <= topVals[0]; h++)
+                {
+                    for (int i = bottomVals[1]; i <= topVals[1]; i++)
+                    {
+                        for (int j = bottomVals[2]; j <= topVals[2]; j++)
+                        {
+                            for (int k = bottomVals[3]; k <= topVals[3]; k++)
+                            {
+                                if (h != w | i != x | j != y | k != z)
+                                {
+                                    if (h >= 0 & h <= size & i >= 0 & i <= size & j >= 0 & j <= size & k >= 0 & k <= size)
+                                    {
+                                        if (conwayIn[h, i, j, k])
+                                        {
+                                            neighbours++;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                return neighbours;
+            }
+            private static bool[,,,] expand4d(bool[,,,] conwayIn)
+            {
+                int size = conwayIn.GetLength(0) + 2;
+                bool[,,,] conwayOut = new bool[size,size, size, size]; // k = 1 is removing pieces from the array
+                for (int h = 1; h <= size - 2; h++)
+                {
+                    for (int i = 1; i <= size - 2; i++)
+                    {
+                        for (int j = 1; j <= size - 2; j++)
+                        {
+                            for (int k = 1; k <= size - 2; k++)
+                            {
+                                conwayOut[h, i, j, k] = conwayIn[h - 1, i - 1, j - 1, k - 1];
+                            }
+                        }
+                    }
+                }
+                return conwayOut;
+            }
+            public static int conwayCuber (string input)
+            {
+                string[] cubesIn =  Regex.Split(input, @"\r\n");
+                int size = cubesIn.Length;
+                bool[,,] conway = new bool[size, size, size];
+                for (int i= 0; i < cubesIn.Length; i++)
+                {
+                    for(int j = 0; j < cubesIn[i].Length; j++)
+                    {
+                        conway[size/2,i,j] = cubesIn[i][j] == '#'; 
+                    }
+                }
+                conwayWindow cWindow = showConway(expand(conway));                
+                for(int i = 0; i < 6; i++)
+                {
+                    conway = runConway(conway);
+                    cWindow.addCube(conway);
+                }
+                return countActive(conway);
+            }
+            private static conwayWindow showConway(bool[,,] conwayIn)
+            {
+                conwayWindow newWin = new conwayWindow(conwayIn);
+                newWin.Show();
+                return newWin;
+            }
+            private static int countActive(bool[,,] conwayIn)
+            {
+                int size = conwayIn.GetLength(0) - 1, sumOut = 0;
+                for(int i = 0; i <= size; i++)
+                {
+                    for (int j = 0; j <= size; j++)
+                    {
+                        for(int k = 0; k <= size; k++)
+                        {
+                            if (conwayIn[i, j, k])
+                            {
+                                sumOut++;
+                            }
+                        }
+                    }
+                }
+                return sumOut;
+            }
+            private static bool[,,] runConway(bool[,,] conwayIn)
+            {
+                // checking if it needs expansion
+                //if (checkForExpansion(conwayIn))
+                //{
+                    conwayIn = expand(conwayIn);
+                
+                int size = conwayIn.GetLength(0);
+                int neighbours;
+                bool[,,] conwayOut = new bool[size, size, size];
+                Array.Copy(conwayIn, conwayOut, size);
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        for (int k = 0;  k < size; k++)
+                        {
+                            neighbours = checkNeighbours(conwayIn, i,j,k);
+                            if (conwayIn[i, j, k] & neighbours != 2 & neighbours != 3)
+                            {
+                                conwayOut[i,j,k] = false;
+                            }
+                            else if (conwayIn[i, j, k]) { conwayOut[i, j, k] = true; }
+                            else if (!conwayIn[i,j,k] & neighbours == 3)
+                            {
+                                conwayOut[i, j, k] = true;
+                            }
+                        }
+                    }
+                }
+                return conwayOut;
+            }
+            private static int checkNeighbours(bool[,,] conwayIn,int x, int y, int z)
+            {
+                int neighbours = 0;
+                int size = conwayIn.GetLength(0) - 1;
+                int[] bottomVals = { x - 1, y - 1, z - 1 };
+                int[] topVals = { x + 1, y + 1, z + 1 };
+                //for(int i = 0; i < 3; i++)
+                //{
+                //    bottomVals[i] = bottomVals[i] < 0 ? 0 : bottomVals[i];
+                //    topVals[i] = topVals[i] > size ? size : topVals[i];
+                //}
+                for (int i = bottomVals[0]; i <= topVals[0]; i++)
+                {
+                    for (int j = bottomVals[1]; j <= topVals[1]; j++)
+                    {
+                        for (int k = bottomVals[2]; k <= topVals[2]; k++)
+                        {
+                            if (i != x | j != y | k != z)
+                            {
+                                if (i >= 0 & i <= size & j >= 0 & j <= size & k >= 0 & k <= size)
+                                {
+                                    if (conwayIn[i, j, k])
+                                    {
+                                        neighbours++;
+                                    }
+                                }
+                               
+                            }
+                        }
+                    }
+                }
+                return neighbours;
+            }
+            private static bool[,,] expand(bool[,,] conwayIn)
+            {
+                int size = conwayIn.GetLength(0) + 2;
+                bool[,,] conwayOut = new bool[size, size, size]; // k = 1 is removing pieces from the array
+                for (int i = 1; i <= size - 2; i++)
+                {
+                    for (int j = 1; j <= size - 2; j++)
+                    {
+                        for(int k = 1; k <= size - 2; k++)
+                        {
+                            conwayOut[i, j, k] = conwayIn[i - 1, j -1, k-1];
+                        }
+                    }
+                }
+                return conwayOut;
+            }
+            private static bool checkForExpansion(bool[,,] conwayIn)
+            {
+                int size = conwayIn.GetLength(0) - 1;
+                for (int i = 0; i < size; i++)
+                {
+                    for(int j = 0; j< size; j++)
+                    {
+                        for(int k = 0; k < size; k++)
+                        {
+                            if (checkEdge(i, j, k, conwayIn))
+                            {
+                                if (conwayIn[i, j, k])
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            private static bool checkEdge(int x, int y, int z, bool[,,] conwayIn)
+            {
+                int size = conwayIn.Length;
+                if(x == 0 | x == size | y == 0 | y == size | z == 0 | z == size)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public struct day18 {
+            public static int part1(string input)
+            {
+                string[] expressions = Regex.Split(input, @"\r\n");
+                int sumOut = 0;
+                for(int i = 0; i < expressions.Length; i++)
+                {
+                    sumOut += calculate(expressions[i]);
+                }
+                return sumOut;
+
+            }
+            public static int calculate(string expression)
+            {
+                MatchCollection matches = Regex.Matches(expression, @"\(([\d]+ (\*|\+) )+[\d]+\)");
+                string expressionOut = expression;
+                bool anyBrackets = false;
+                foreach (Match match in matches)
+                {
+                    anyBrackets = true;
+                    int newInt;
+                    //Regex regex = match.Value;
+                    string[] expressionParts = new string[2];
+                    expressionParts[0] = expression.Substring(0, match.Index - 1);
+                    expressionParts[1] = expression.Substring(match.Value.Length + match.Index, expression.Length - match.Value.Length - match.Index);
+                    newInt = solveAll(match.Value);
+                    expressionOut = expressionParts[0] + newInt + expressionParts[1];
+                }
+                
+                if (!anyBrackets)
+                {
+                    return solveAll(expression);
+                }
+                return calculate(expressionOut);
+            }
+            private static int solveAll(string input)
+            {
+                
+                List<string> expressions = new List<string>();
+                MatchCollection bracketMatches = Regex.Matches(input, @"[\d]+|\*|\+");
+                for (int i = 0; i < bracketMatches.Count; i++) { expressions.Add(bracketMatches[i].Value); }
+                for(int i = 0; i < bracketMatches.Count; i++)
+                {
+                    if (expressions.Count == 1)
+                    {
+                        break;
+                    }
+                    List<string> toKeep = expressions.GetRange(3, expressions.Count - 3);
+                    string toSolve = String.Join(" ", expressions.GetRange(0, 3));
+                    expressions.Clear();
+                    expressions.Add(Convert.ToString(solve(toSolve)));
+                    expressions.AddRange(toKeep);
+                   
+                }
+                
+                return Convert.ToInt32(expressions[0]);
+            }
+            private static int solve(string input)
+            {
+                int intOut;
+                MatchCollection bracketMatches = Regex.Matches(input, @"[\d]+|\*|\+");
+                if (bracketMatches[1].Value == "*")
+                {
+                    intOut = Convert.ToInt32(bracketMatches[0].Value) * Convert.ToInt32(bracketMatches[2].Value);
+                }
+                else
+                {
+                    intOut = Convert.ToInt32(bracketMatches[0].Value) + Convert.ToInt32(bracketMatches[2].Value);
+                }
+                return intOut;
+            }
+        }
         public struct day19 { }
         public struct day20 { }
         public struct day21 { }

@@ -44,10 +44,10 @@
         <Button Content="D15 P1" HorizontalAlignment="Left" Margin="187.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d15P1Clk" Grid.Column="1"/>
         <Button Content="D15 P2" HorizontalAlignment="Left" Margin="267.2,360,0,0" VerticalAlignment="Top" Width="75" Click="d15P2Clk" Grid.Column="1"/>
         <Button Content="D16 P1" HorizontalAlignment="Left" Margin="187.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d16P1Clk" Grid.Column="1"/>
-        <Button Content="D16P2" HorizontalAlignment="Left" Margin="267.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
-        <Button Content="D17 P1" HorizontalAlignment="Left" Margin="347.2,10,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
-        <Button Content="D17 P2" HorizontalAlignment="Left" Margin="347.2,35,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
-        <Button Content="D18 P1" HorizontalAlignment="Left" Margin="347.2,60,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
+        <Button Content="D16P2" HorizontalAlignment="Left" Margin="267.2,385,0,0" VerticalAlignment="Top" Width="75" Click="d16P2Clk" Grid.Column="1"/>
+        <Button Content="D17 P1" HorizontalAlignment="Left" Margin="347.2,10,0,0" VerticalAlignment="Top" Width="75" Click="d17P1Clk" Grid.Column="1"/>
+        <Button Content="D17 P2" HorizontalAlignment="Left" Margin="347.2,35,0,0" VerticalAlignment="Top" Width="75" Click="d17P2" Grid.Column="1"/>
+        <Button Content="D18 P1" HorizontalAlignment="Left" Margin="347.2,60,0,0" VerticalAlignment="Top" Width="75" Click="d18P1Clk" Grid.Column="1"/>
         <Button Content="D18 P2" HorizontalAlignment="Left" Margin="347.2,85,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
         <Button Content="D19 P1" HorizontalAlignment="Left" Margin="347.2,110,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
         <Button Content="D20 P1" HorizontalAlignment="Left" Margin="347.2,160,0,0" VerticalAlignment="Top" Width="75" Click="d13P1Clk" Grid.Column="1"/>
