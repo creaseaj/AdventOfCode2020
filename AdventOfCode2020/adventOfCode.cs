@@ -1318,6 +1318,8 @@ namespace AdventOfCode2020
                 int numOut = checkMatches(matches,ranges);
                 return numOut;
             }
+
+            //p2
             public static int p2ReadTickets(string listIn)
             {
                 string[] instruction = Regex.Split(listIn, @"\r\n\r\n");
@@ -1336,6 +1338,7 @@ namespace AdventOfCode2020
                 Dictionary<string,List<int[]>> ticketNames = findTicketsFields(instruction[0], validTickets);
                 return 0;
             }
+            //p2
             private static Dictionary<string,List<int[]>> findTicketsFields(string instruction, List<int[]> ticketRanges)
             {
                 Dictionary<string, List<int[]>> dicOut = new Dictionary<string, List<int[]>>();
@@ -1348,37 +1351,32 @@ namespace AdventOfCode2020
                     ticketLimits.Add(Regex.Split(line,@":")[0], p2getRanges(line));
                 }
                 string[] ticketKeys = ticketLimits.Keys.ToArray();
-                for (int i = 0; i < ticketFits.GetLength(0); i++)
+               
+                // Now we've got what each value in the ticket list matches, we can find which ones only match what.
+                // p2
+                bool[][] finalMatches = new bool[ticketFits.GetLength(1)][];
+                for(int i = 0; i < finalMatches.Count(); i++)
                 {
-                    for(int j = 0; j < ticketFits.GetLength(1); j++)
+                    finalMatches[i] = new bool[ticketFits.GetLength(2)];
+                    for(int j = 0; j < finalMatches.Count(); j++)
                     {
-                        for (int k = 0; k < ticketFits.GetLength(2); k++)
-                        {
-                            ticketFits[i, j, k] = checkTicketNumber(ticketRanges[i][j], ticketLimits[ticketKeys[k]]);
-                        }
+                        finalMatches[i][j] = true;
                     }
                 }
-                // Now we've got what each value in the ticket list matches, we can find which ones only match what.j
-                bool[][] finalMatches = new bool[ticketFits.GetLength(1)][];
                 for (int j = 0; j < ticketFits.GetLength(1); j++)
                 {
                     for (int k = 0; k < ticketFits.GetLength(2); k++)
                     {
-                        finalMatches[j] = new bool[ticketFits.GetLength(2)];
-                        for(int i = 0; i < ticketFits.GetLength(0); i++)
+                        for (int i = 0; i < ticketFits.GetLength(0); i++)
                         {
-                            finalMatches[j][k] = ticketFits[i, j, k] == false ? false : true;
-                            if(finalMatches[j][k] == false)
-                            {
-                                break;
-                            }
+                            finalMatches[j][k] = finalMatches[j][k] != false ? checkTicketNumber(ticketRanges[i][j], ticketLimits[ticketKeys[k]]) : false;
                         }
                     }
                 }
+                // so after having looked at the output, there is always a different number of true and falses, so we can organise what's what based on that
                 string strOut = "";
                 foreach (bool[] ticket in finalMatches)
                 {
-                    
                     strOut += "\n";
                     foreach(bool num in ticket)
                     {
@@ -1386,24 +1384,7 @@ namespace AdventOfCode2020
                     }
                     
                 }
-                //for(int i = 0; i < fields.Length; i++)
-                //{
-                //    MatchCollection matches = Regex.Matches(fields[i], @"[\d]+-[\d]+ or [\d]+-[\d]+");
-                //    foreach (Match match in matches)
-                //    {
-                //        range = (Array.ConvertAll(Regex.Split(match.Value, @"-| or "), int.Parse));
-                //        newRange[0] = range[0];
-                //        newRange[1] = range[3];
-                //    }
-                //    for(int j = 0; j < ticketRanges.Count; j++)
-                //    {
-                //        if (isEncased(ticketRanges[j], newRange))
-                //        {
-                //            ticketFits[i, j] = true;
-                //        }
-                //        else { ticketFits[i, j] = false; }
-                //    }
-                //}
+
                 return dicOut;
             }
             private static List<int[]> getRangesOfTickets(List<int[]> tickets)
@@ -1546,7 +1527,6 @@ namespace AdventOfCode2020
                     {
                         return true;
                     }
-                    
                 }
                 return false;
             }
