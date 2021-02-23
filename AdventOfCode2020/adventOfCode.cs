@@ -1333,35 +1333,78 @@ namespace AdventOfCode2020
                     }
                 }
                 List<int[]> ticketRanges = getRangesOfTickets(validTickets);
-                string strOut = findTicketsFields(instruction[0], ticketRanges);
+                Dictionary<string,List<int[]>> ticketNames = findTicketsFields(instruction[0], validTickets);
                 return 0;
             }
-            private static string findTicketsFields(string instruction, List<int[]> ticketRanges)
+            private static Dictionary<string,List<int[]>> findTicketsFields(string instruction, List<int[]> ticketRanges)
             {
-                string[] fields = Regex.Split(instruction, @"\r\n");
-                bool[,] ticketFits = new bool[ticketRanges.Count, ticketRanges.Count]; // i is each ticket field, j is the ticket ranges
+                Dictionary<string, List<int[]>> dicOut = new Dictionary<string, List<int[]>>();
+                string[] fields = Regex.Split(instruction, @"\r\n"); //separating instructions line by line
+                bool[,,] ticketFits = new bool[ticketRanges.Count, fields.Count(), fields.Count()]; // i is each ticket line by line, j each ticket number, k is the fields it can match from fields
                 //List<int> range = new List<int>();
-                int[] range;
-                int[] newRange = new int[2];
-                for(int i = 0; i < fields.Length; i++)
+                Dictionary<string, List<int[]>> ticketLimits = new Dictionary<string, List<int[]>>();
+                foreach(string line in fields)
                 {
-                    MatchCollection matches = Regex.Matches(fields[i], @"[\d]+-[\d]+ or [\d]+-[\d]+");
-                    foreach (Match match in matches)
+                    ticketLimits.Add(Regex.Split(line,@":")[0], p2getRanges(line));
+                }
+                string[] ticketKeys = ticketLimits.Keys.ToArray();
+                for (int i = 0; i < ticketFits.GetLength(0); i++)
+                {
+                    for(int j = 0; j < ticketFits.GetLength(1); j++)
                     {
-                        range = (Array.ConvertAll(Regex.Split(match.Value, @"-| or "), int.Parse));
-                        newRange[0] = range[0];
-                        newRange[1] = range[3];
-                    }
-                    for(int j = 0; j < ticketRanges.Count; j++)
-                    {
-                        if (isEncased(ticketRanges[j], newRange))
+                        for (int k = 0; k < ticketFits.GetLength(2); k++)
                         {
-                            ticketFits[i, j] = true;
+                            ticketFits[i, j, k] = checkTicketNumber(ticketRanges[i][j], ticketLimits[ticketKeys[k]]);
                         }
-                        else { ticketFits[i, j] = false; }
                     }
                 }
-                return "ha";
+                // Now we've got what each value in the ticket list matches, we can find which ones only match what.j
+                bool[][] finalMatches = new bool[ticketFits.GetLength(1)][];
+                for (int j = 0; j < ticketFits.GetLength(1); j++)
+                {
+                    for (int k = 0; k < ticketFits.GetLength(2); k++)
+                    {
+                        finalMatches[j] = new bool[ticketFits.GetLength(2)];
+                        for(int i = 0; i < ticketFits.GetLength(0); i++)
+                        {
+                            finalMatches[j][k] = ticketFits[i, j, k] == false ? false : true;
+                            if(finalMatches[j][k] == false)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                string strOut = "";
+                foreach (bool[] ticket in finalMatches)
+                {
+                    
+                    strOut += "\n";
+                    foreach(bool num in ticket)
+                    {
+                        strOut += num == true ? "#" : ".";
+                    }
+                    
+                }
+                //for(int i = 0; i < fields.Length; i++)
+                //{
+                //    MatchCollection matches = Regex.Matches(fields[i], @"[\d]+-[\d]+ or [\d]+-[\d]+");
+                //    foreach (Match match in matches)
+                //    {
+                //        range = (Array.ConvertAll(Regex.Split(match.Value, @"-| or "), int.Parse));
+                //        newRange[0] = range[0];
+                //        newRange[1] = range[3];
+                //    }
+                //    for(int j = 0; j < ticketRanges.Count; j++)
+                //    {
+                //        if (isEncased(ticketRanges[j], newRange))
+                //        {
+                //            ticketFits[i, j] = true;
+                //        }
+                //        else { ticketFits[i, j] = false; }
+                //    }
+                //}
+                return dicOut;
             }
             private static List<int[]> getRangesOfTickets(List<int[]> tickets)
             {
@@ -1437,6 +1480,18 @@ namespace AdventOfCode2020
                 return simplifyRanges(ranges);
 
             }
+            private static List<int[]> p2getRanges(string input)
+            {
+                List<int[]> ranges = new List<int[]>();
+                MatchCollection matches = Regex.Matches(input, @"[\d]+-[\d]+");
+
+                foreach (Match match in matches)
+                {
+                    ranges.Add(Array.ConvertAll(Regex.Split(match.Value, @"-"), int.Parse));
+                }
+                return ranges;
+
+            }
             private static List<int[]> simplifyRanges(List<int[]> rangeIn)
             {
                 int largestNum = 0, bottomRange = 0,topRange = 0;
@@ -1482,36 +1537,19 @@ namespace AdventOfCode2020
                 }
 
                 return rangeOut;
-
-                //List<int[]> rangeOut = new List<int[]>();
-                ////rangeIn.Sort();
-                //bool noOverlaps = true, noOverlapsAnywhere = true;
-                //for (int i = 0; i < rangeIn.Count; i++)
-                //{
-                //    for (int j = i + 1; j < rangeIn.Count; j++)
-                //    {
-                   
-                //        {=
-                //            int[] newRange = rangesOverlap(rangeIn[i], rangeIn[j]);
-                //            if (newRange != null)
-                //            {
-                //                rangeOut.Add(newRange);
-                //            }
-                        
-                       
-                //    }
-                //}
-                //if (rangeOut[rangeOut.Count - 1][1] != rangeIn[rangeIn.Count - 1][1])
-                //    {
-                //        rangeOut.Add(rangeIn[rangeIn.Count - 1]);
-                //    }
-                //if (noOverlapsAnywhere)
-                //{
-                //    return rangeOut;
-                //}
-                //return simplifyRanges(rangeOut);
             }
-
+            private static bool checkTicketNumber(int ticketNo, List<int[]> ranges)
+            {
+                foreach(int[] range in ranges)
+                {
+                    if (isBetween(ticketNo, range))
+                    {
+                        return true;
+                    }
+                    
+                }
+                return false;
+            }
 
             private static int[] rangesOverlap(int[] range1, int[] range2)
             {
