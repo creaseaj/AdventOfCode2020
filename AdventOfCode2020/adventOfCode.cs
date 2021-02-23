@@ -1687,6 +1687,7 @@ namespace AdventOfCode2020
                     conway = runConway(conway);
                     cWindow.addCube(conway);
                 }
+                showConway(conway);
                 return countActive(conway);
             }
             private static conwayWindow showConway(bool[,,] conwayIn)
@@ -1841,45 +1842,31 @@ namespace AdventOfCode2020
             {
                 MatchCollection matches = Regex.Matches(expression, @"\(([\d]+ (\*|\+) )+[\d]+\)");
                 string expressionOut = expression;
-                bool anyBrackets = false;
-                foreach (Match match in matches)
+                string[] expressionParts = new string[2];
+                while (matches.Count != 0)
                 {
-                    anyBrackets = true;
                     int newInt;
-                    //Regex regex = match.Value;
-                    string[] expressionParts = new string[2];
-                    expressionParts[0] = expression.Substring(0, match.Index - 1);
-                    expressionParts[1] = expression.Substring(match.Value.Length + match.Index, expression.Length - match.Value.Length - match.Index);
-                    newInt = solveAll(match.Value);
+                    expressionParts[0] = expressionOut.Substring(0, matches[0].Index );
+                    expressionParts[1] = expressionOut.Substring(matches[0].Value.Length + matches[0].Index, expressionOut.Length - matches[0].Value.Length - matches[0].Index);
+                    newInt = solveAll(matches[0].Value);
                     expressionOut = expressionParts[0] + newInt + expressionParts[1];
+                    matches = Regex.Matches(expressionOut, @"\(([\d]+ (\*|\+) )+[\d]+\)");
                 }
-                
-                if (!anyBrackets)
-                {
-                    return solveAll(expression);
-                }
-                return calculate(expressionOut);
+                return solveAll(expressionOut);                
             }
             private static int solveAll(string input)
             {
-                
                 List<string> expressions = new List<string>();
-                MatchCollection bracketMatches = Regex.Matches(input, @"[\d]+|\*|\+");
-                for (int i = 0; i < bracketMatches.Count; i++) { expressions.Add(bracketMatches[i].Value); }
-                for(int i = 0; i < bracketMatches.Count; i++)
+                MatchCollection matches = Regex.Matches(input, @"[\d]+|\*|\+");
+                while (expressions.Count != matches.Count) { expressions.Add(matches[expressions.Count].Value); }
+                while(expressions.Count > 1)
                 {
-                    if (expressions.Count == 1)
-                    {
-                        break;
-                    }
                     List<string> toKeep = expressions.GetRange(3, expressions.Count - 3);
                     string toSolve = String.Join(" ", expressions.GetRange(0, 3));
                     expressions.Clear();
                     expressions.Add(Convert.ToString(solve(toSolve)));
                     expressions.AddRange(toKeep);
-                   
                 }
-                
                 return Convert.ToInt32(expressions[0]);
             }
             private static int solve(string input)
