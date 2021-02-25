@@ -1320,7 +1320,7 @@ namespace AdventOfCode2020
             }
 
             //p2
-            public static int p2ReadTickets(string listIn)
+            public static string p2ReadTickets(string listIn)
             {
                 string[] instruction = Regex.Split(listIn, @"\r\n\r\n");
                 List<int[]> ranges = getRanges(instruction[0]);
@@ -1335,16 +1335,22 @@ namespace AdventOfCode2020
                     }
                 }
                 List<int[]> ticketRanges = getRangesOfTickets(validTickets);
-                Dictionary<string,List<int[]>> ticketNames = findTicketsFields(instruction[0], validTickets);
-                return 0;
+                int[] output =  findTicketsFields(instruction[0], validTickets);
+                int[] myTicket = Array.ConvertAll(Regex.Split(instruction[1].Substring(12), @","),int.Parse);
+                decimal numOut = 1;
+                for(int i = 0; i < 6; i ++)
+                {
+                    numOut = numOut * myTicket[output[i]];
+                }
+                return numOut.ToString();
+                
             }
             //p2
-            private static Dictionary<string,List<int[]>> findTicketsFields(string instruction, List<int[]> ticketRanges)
+            private static int[] findTicketsFields(string instruction, List<int[]> ticketRanges)
             {
-                Dictionary<string, List<int[]>> dicOut = new Dictionary<string, List<int[]>>();
+                
                 string[] fields = Regex.Split(instruction, @"\r\n"); //separating instructions line by line
                 bool[,,] ticketFits = new bool[ticketRanges.Count, fields.Count(), fields.Count()]; // i is each ticket line by line, j each ticket number, k is the fields it can match from fields
-                //List<int> range = new List<int>();
                 Dictionary<string, List<int[]>> ticketLimits = new Dictionary<string, List<int[]>>();
                 foreach(string line in fields)
                 {
@@ -1384,8 +1390,49 @@ namespace AdventOfCode2020
                     }
                     
                 }
+                // each row has a different amount of trues, create an index to know which order they are in
+                // then create x,y relations based on the order they are in and what the changes are between each row
+                // use the first six x's to get the answer
+                // ezpz
+                // create an index to order the rows. when i run through this in order, it organises the final matches too
+                int[] index = new int[finalMatches.Length];
+                for(int i = 0; i < finalMatches.Length; i++)
+                {
+                    index[countBool(finalMatches[i]) - 1] = i;
+                }
 
-                return dicOut;
+                // use the index to find the new locations of the changes to make pairs.
+                int[] newPairings = new int[finalMatches.Length];
+                
+                newPairings[findNewLoc(new bool[finalMatches.Length], finalMatches[index[0]])] = index[0];
+                for (int i = 1; i < index.Length; i++)
+                {
+                    
+                    newPairings[findNewLoc(finalMatches[index[i-1]], finalMatches[index[i]])] = index[i];
+
+                }
+                
+                return newPairings;
+            }
+            private static int findNewLoc(bool[] oldBool, bool[] newBool)
+            {
+                for(int i = 0; i < oldBool.Length; i++)
+                {
+                    if(oldBool[i] != newBool[i])
+                    {
+                        return i;
+                    }
+                }
+                return 0;
+            }
+            private static int countBool(bool[] boolIn)
+            {
+                int numOut = 0;
+                foreach(bool item in boolIn)
+                {
+                    numOut = item ? numOut + 1 : numOut;
+                }
+                return numOut;
             }
             private static List<int[]> getRangesOfTickets(List<int[]> tickets)
             {
@@ -1855,6 +1902,19 @@ namespace AdventOfCode2020
                 }
                 return sumOut;
 
+            }
+            public static int bigSolve(List<string> expression)
+            {
+                // solve any brackets.
+                foreach(string item in expression)
+                {
+                    if(item == "(")
+                    {
+                        expression.Remove(item);
+                    }
+                }
+                // solve left to right.
+                return 0;
             }
             public static int calculate(string expression)
             {
